@@ -1,11 +1,11 @@
----
-layout: minimal_default 
-title: Test index page using slate theme
----
+<html>
 
-{% for post in site.posts %}
-    <a href="{{ post.url }}">{{ post.title }}</a>
-    <span class="index_date"> {{ post.date | date_to_long_string }}</span>
-    <hr/>
-{% endfor %}
-
+<head>
+<script type="text/javascript"
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+</head>
+<body>
+MathJax test \( 1 + x \)
+</body>
+</html>

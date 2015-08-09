@@ -1,9 +1,0 @@
-[submodule "static/slate"]
-	path = static/slate
-	url = https://github.com/christopherpoole/slate
-[submodule "static/modernist"]
-	path = static/modernist
-	url = https://github.com/christopherpoole/modernist
-[submodule "static/minimal"]
-	path = static/minimal
-	url = https://github.com/christopherpoole/minimal
