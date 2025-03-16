@@ -1,3 +1,8 @@
+---
+layout: default
+title: "Hiper Unifi IPv6"
+---
+
 # Setting Up IPv6 on a Ubiquiti Router with Hiper Internet
 
 This guide explains how to configure a Ubiquiti router for IPv6 support on the Hiper network using the UniFi Network Controller. While many of the steps are similar for other Nuuday ISPs, this guide is tailored for Hiper.
