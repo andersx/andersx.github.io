@@ -26,7 +26,7 @@ These steps will enable your WAN connection and set up IPv6:
    - For IPv6, set the **Prefix Delegation Size** to **48**.
 
 4. **Reference Screenshot:**  
-   ![Internet Settings](/https://raw.githubusercontent.com/andersx/andersx.github.io/main/_posts/screenshots/internet.png)
+   ![Internet Settings](https://raw.githubusercontent.com/andersx/andersx.github.io/main/_posts/screenshots/internet.png)
 
 ---
 
@@ -42,7 +42,7 @@ Follow these steps to enable IPv6 on your LAN:
    - Change the **Interface Type** to **Prefix Delegation**.
 
 3. **Reference Screenshot:**  
-   ![LAN Settings](https://raw.githubusercontent.com/andersx/andersx.github.io/main/_posts/screenshots/an.png)
+   ![LAN Settings](https://raw.githubusercontent.com/andersx/andersx.github.io/main/_posts/screenshots/lan.png)
 
 ---
 
