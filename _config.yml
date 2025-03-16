@@ -1,4 +1,5 @@
 remote_theme: pages-themes/midnight@v0.2.0
+title: "Tåbelig Tech Blog"
 plugins:
 - jekyll-remote-theme
 baseurl: ""
