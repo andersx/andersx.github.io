@@ -58,7 +58,7 @@ Ensure that IPv6 is working properly:
 2. **Test LAN Devices:**  
    Devices on your LAN should now receive an IPv6 address and be able to access the internet. Verify by visiting [Test IPv6](https://test-ipv6.csclub.uwaterloo.ca/)—a perfect configuration will yield a 10/10 score.
    
-   ![IPv6 Test](https://github.com/andersx/andersx.github.io/blob/main/_posts/screenshots/check.png)
+   ![IPv6 Test](https://raw.githubusercontent.com/andersx/andersx.github.io/test_simple/_posts/screenshots/check.png)
 
 ---
 
