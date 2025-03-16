@@ -21,7 +21,7 @@ These steps will enable your WAN connection and set up IPv6:
    - For IPv6, set the **Prefix Delegation Size** to **48**.
 
 4. **Reference Screenshot:**  
-   ![Internet Settings](screenshots/internet.png)
+   ![Internet Settings](/_posts/screenshots/internet.png)
 
 ---
 
@@ -37,7 +37,7 @@ Follow these steps to enable IPv6 on your LAN:
    - Change the **Interface Type** to **Prefix Delegation**.
 
 3. **Reference Screenshot:**  
-   ![LAN Settings](screenshots/lan.png)
+   ![LAN Settings](/_posts/screenshots/lan.png)
 
 ---
 
@@ -48,12 +48,12 @@ Ensure that IPv6 is working properly:
 1. **Check the WAN Side:**  
    Open the landing page of the Network Controller application. You should see details similar to the screenshot below:
    
-   ![Landing Page](screenshots/landing_page.png)
+   ![Landing Page](/_posts/screenshots/landing_page.png)
 
 2. **Test LAN Devices:**  
    Devices on your LAN should now receive an IPv6 address and be able to access the internet. Verify by visiting [Test IPv6](https://test-ipv6.csclub.uwaterloo.ca/)—a perfect configuration will yield a 10/10 score.
    
-   ![IPv6 Test](screenshots/check.png)
+   ![IPv6 Test](/_posts/screenshots/check.png)
 
 ---
 
