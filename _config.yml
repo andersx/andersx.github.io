@@ -1,7 +1,11 @@
 theme: minima
 title: "Tåbelig Tech Blog"
+author: "andersx"
+
+
 plugins:
 - jekyll-remote-theme
 baseurl: ""
 
-
+exclude:
+  - README.md
