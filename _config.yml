@@ -1,5 +1,8 @@
 remote_theme: "jekyll/minima"
+theme: minima
 title: "Tåbelig Tech Blog"
 plugins:
 - jekyll-remote-theme
 baseurl: ""
+
+
