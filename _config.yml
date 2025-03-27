@@ -1,4 +1,4 @@
-remote_theme: pages-themes/minima@v2.5.2
+remote_theme: "jekyll/minima"
 title: "Tåbelig Tech Blog"
 plugins:
 - jekyll-remote-theme
