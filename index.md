@@ -1,5 +1,5 @@
 ---
 layout: home
-title: "Welcome to Tåbelig Tech Blog"
+title: "Home"
 ---
 Welcome to my tåbelige tech blog!
