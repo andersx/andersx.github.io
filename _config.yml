@@ -16,3 +16,6 @@ exclude:
  - README.md
 
 google_analytics: G-WPJ47FTM5D
+
+minima:
+  show_excerpts: true
