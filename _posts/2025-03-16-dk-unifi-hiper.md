@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Setting Up IPv6 on a Ubiquiti Router with Hiper ISP"
+lang: "en"
 date: 2025-03-16
 categories: guides networking ubiquiti
 ---

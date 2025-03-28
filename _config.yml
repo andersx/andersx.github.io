@@ -1,21 +1,23 @@
-remote_theme: jekyll/minima
-
 title: "Tåbelig Tech Blog"
 description: "En blog om teknologi og andet tåbeligt"
 author: "skrevet af andersx"
+lang: "da"
+url: "https://andersx.dk"
+baseurl: ""  # Only needed if site is in a subdirectory
+
+remote_theme: jekyll/minima
 
 plugins:
-- jekyll-remote-theme
-
-minima:
-  skin: 'dark'
-
-baseurl: ""
-
-exclude:
- - README.md
+  - jekyll-remote-theme
+  - jekyll-sitemap
+  - jekyll-feed
 
 google_analytics: G-WPJ47FTM5D
 
+exclude:
+  - README.md
+
 minima:
+  skin: 'dark'
   show_excerpts: true
+
