@@ -1,10 +1,15 @@
-theme: minima
-title: "Tåbelig Tech Blog"
-author: "andersx"
+remote_theme: jekyll/minima
 
+title: "Tåbelig Tech Blog"
+description: "En blog om teknologi og andet tåbeligt"
+author: "skrevet af andersx"
 
 plugins:
 - jekyll-remote-theme
+
+minima:
+  skin: 'dark'
+
 baseurl: ""
 
 exclude:
