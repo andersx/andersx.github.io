@@ -11,6 +11,8 @@ tags:
   - no such file or directory
 ---
 
+This post will show you how to install [MOPAC2009](http://openmopac.net/MOPAC2009.html) on Ubuntu 10.04 LTS, and why it's important to keep source codes open.
+
 ## Installing MOPAC2009 on Ubuntu 10.04 LTS
 
 If you try and install [MOPAC2009](http://openmopac.net/MOPAC2009.html) on a standard [Ubuntu 10.04 LTS](http://www.ubuntu.com/business/desktop/long-term-support) system, you will get a very weird problem. I unzipped MOPAC2009 in `/opt/mopac` as described in the installation guide. However, when I tried to run the executable I got a very odd message:
