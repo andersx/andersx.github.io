@@ -1,15 +1,12 @@
 ---
 layout: post
-title: Hybrid RHF/MP2 geometry optimizations with the Effective Fragment Molecular
+title: Hybrid RHF-MP2 geometry optimizations with the Effective Fragment Molecular
 Orbital Method
 date: '2013-10-28T11:17:00.002+01:00'
 author: hellogetmyblogback
-tags:
-modified\_time: '2013-10-28T11:17:47.609+01:00'
-blogger\_id: tag:blogger.com,1999:blog-8160351477288734008.post-1046493316314019511
-blogger\_orig\_url: https://combichem.blogspot.com/2013/10/hybrid-rhfmp2-geometry-optimizations.html
+modified_time: '2013-10-28T11:17:47.609+01:00'
+blogger_orig_url: https://combichem.blogspot.com/2013/10/hybrid-rhfmp2-geometry-optimizations.html
 ---
-
 
 This is a short post on a paper we are submitting to PLOS ONE. It is of course already (and have been for quite some time) available from arXiv:
 
