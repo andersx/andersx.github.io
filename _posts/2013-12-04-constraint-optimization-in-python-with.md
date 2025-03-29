@@ -1,0 +1,25 @@
+---
+layout: post
+title: Constraint optimization in Python with Open Babel
+date: '2013-12-04T10:36:00.000+01:00'
+author: hellogetmyblogback
+tags:
+modified\_time: '2013-12-04T10:36:47.655+01:00'
+blogger\_id: tag:blogger.com,1999:blog-8160351477288734008.post-948204056349719779
+blogger\_orig\_url: https://combichem.blogspot.com/2013/12/constraint-optimization-in-python-with.html
+---
+
+This post is just a quick post to show, how you can optimize molecules with harmonic constraints in Python with Open Babel. This requires Open Babel to be compiled with Python SWIG-bindings.
+
+
+
+There are three types of constraints, distances, angles and torsions. Here is a gist that might help get you started.
+
+
+
+
+
+
+
+
+**Acknowledgements:** Kasper Thofte pretty much wrote the above gist back in the days.
