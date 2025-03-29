@@ -1,0 +1,65 @@
+---
+layout: post
+title: Downgrading GDM to version 2.20 on CentOS
+date: '2012-10-06T02:10:00.003-07:00'
+author: hellogetmyblogback
+tags:
+modified_time: '2012-10-06T02:38:32.371-07:00'
+blogger_id: tag:blogger.com,1999:blog-4501956485444967735.post-888844774414776365
+blogger_orig_url: https://centosn00b.blogspot.com/2012/10/downgrading-gdm-to-version-220-on-centos.html
+---
+
+Sun Ray Server Software requires <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">GDM &lt;= 2.20</span>. Unfortunately contemporary (i.e. up-to-date) Linux distros do not offer outdated <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">GDM</span>. However <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">GDM</span> is surprisingly easy to build from source on CentOS.<br />
+<br />
+<br />
+<b>Step 1: Get GDM 2.20 source </b><br />
+<br style="font-family: &quot;Courier New&quot;,Courier,monospace;" />
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">wget http://download.gnome.org/sources/gdm/2.20/gdm-2.20.11.tar.bz2</span><br />
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">tar xf gdm-2.20.11.tar.bz2</span><br />
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">cd gdm-2.20.11</span><br />
+<br />
+<br />
+<b>Step 2: Edit <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">gdm-2.20.11/daemon/gdm-net.c</span></b><br />
+<br />
+<br />
+Change<br />
+<br />
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">#define MAX_CONNECTIONS 15</span><br />
+<br />
+to<br />
+<div style="font-family: &quot;Courier New&quot;,Courier,monospace;">
+<br /></div>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">#define MAX_CONNECTIONS 100</span><br />
+<br />
+(Prevents<span style="font-family: &quot;Courier New&quot;,Courier,monospace;"> GDM</span> from hanging when all your Sun Ray terminals connect) <br />
+<b><br /></b>
+<br />
+<b>Step 3: Install dependencies</b><br />
+<br />
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">su</span><br />
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">yum install audit-libs-devel \</span><br />
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&nbsp;libglade2-devel \</span><br />
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&nbsp;libart_lgpl-devel \</span><br />
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&nbsp;libgnomecanvas \</span><br />
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&nbsp;libgnomecanvas-devel \</span><br />
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&nbsp;librsvg2-devel \</span><br />
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&nbsp;dbus-glib-devel \</span><br />
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&nbsp;popt-devel \</span><br />
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&nbsp;gnome-doc-utils</span><br />
+<br />
+<br />
+<b>Step 4: Configure and make a dirty install</b><br />
+<br />
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">./configure</span><br />
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">make</span><br />
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">make install</span><br />
+<br />
+<br />
+<br />
+<b>Step 5: Logout and test</b><br />
+<br />
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">gdm --version</span><br />
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">GDM 2.20.11</span><br />
+<br />
+<br />
+Leave a comment if the above didn't work. This was done on a CentOS 6.3 64-bit machine.

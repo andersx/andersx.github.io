@@ -1,0 +1,55 @@
+---
+layout: post
+title: Shutting down at 6:30 AM?
+date: '2012-06-29T08:42:00.002-07:00'
+author: hellogetmyblogback
+tags:
+modified_time: '2012-07-06T11:28:33.801-07:00'
+blogger_id: tag:blogger.com,1999:blog-4501956485444967735.post-4099827913145789503
+blogger_orig_url: https://centosn00b.blogspot.com/2012/06/shutting-down-at-630-am.html
+---
+
+We're having cooling maintenance carried out on Monday morning at 7:30 (yes AM!). As nobody likes getting up so <i>friggin'</i> early in the morning, here's how I'm going to shut down the servers nicely at 6:30. The command is simply called <b style="font-family: &quot;Courier New&quot;,Courier,monospace;">'at'</b>.<br />
+<br />
+You envoke it by <b><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">'at &lt;time&gt;'</span></b>, e.g.:<br />
+<br />
+<div style="font-family: &quot;Courier New&quot;,Courier,monospace;">
+<b># at 6:30</b></div>
+<div style="font-family: &quot;Courier New&quot;,Courier,monospace;">
+<b>&gt; shutdown -hP [Ctrl-D]</b></div>
+<br />
+Here is where write the command being carried out .. when you're done, simply exit with a <b style="font-family: &quot;Courier New&quot;,Courier,monospace;">[Ctrl-D]</b>. You wil be greeted by a message like <br />
+<br />
+<b style="font-family: &quot;Courier New&quot;,Courier,monospace;">job 3 at 2012-06-29 6:30</b><br />
+<br />
+The integer is the job id. You can also be more specific:<br />
+<br />
+<div style="font-family: &quot;Courier New&quot;,Courier,monospace;">
+<b># at 6:30 monday</b></div>
+<br />
+Jobs are executed only once. List your current at jobs with <b style="font-family: &quot;Courier New&quot;,Courier,monospace;">atq</b>:<br />
+<br />
+<div style="font-family: &quot;Courier New&quot;,Courier,monospace;">
+<b># atq</b></div>
+<div style="font-family: &quot;Courier New&quot;,Courier,monospace;">
+<b>3&nbsp;&nbsp;&nbsp; 2012-06-29 6:30 a root</b></div>
+<br />
+And cancel your at jobs with <b style="font-family: &quot;Courier New&quot;,Courier,monospace;">atrm</b> (using the job id):<br />
+<br />
+<b style="font-family: &quot;Courier New&quot;,Courier,monospace;"># atrm 3</b><br />
+<br />
+Back to the problem at hand. We have a bunch of compute nodes, named *unray (i.e. bunray, gunray, funray, zunray, punray, wunray, runray,). Since I don't want to manually SSH into every node, I use SSH-keys and a for loop. All nodes mount the same /opt/folder. I put a file containing the command "<b style="font-family: &quot;Courier New&quot;,Courier,monospace;">shutdown -hP now</b>" in <b style="font-family: &quot;Courier New&quot;,Courier,monospace;">/opt/scripts/shutdown.txt</b>. <b style="font-family: &quot;Courier New&quot;,Courier,monospace;">at</b> reads commands from a file via the <b style="font-family: &quot;Courier New&quot;,Courier,monospace;">-f</b> switch. Now it is very easy to make all nodes receive the <b style="font-family: &quot;Courier New&quot;,Courier,monospace;">at </b>command:<br />
+<br />
+<br />
+<div style="font-family: &quot;Courier New&quot;,Courier,monospace;">
+<b>for i in b f g z p r w</b></div>
+<div style="font-family: &quot;Courier New&quot;,Courier,monospace;">
+<b>do</b></div>
+<div style="font-family: &quot;Courier New&quot;,Courier,monospace;">
+<b>ssh root@$i\unray at -f /opt/scripts/shutdown.txt 6:30am monday</b></div>
+<div style="font-family: &quot;Courier New&quot;,Courier,monospace;">
+<b>done﻿</b></div>
+<br />
+<br />
+Happy <b><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">at</span></b>'ing!<br />
+<br />

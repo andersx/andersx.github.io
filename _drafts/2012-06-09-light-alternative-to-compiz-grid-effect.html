@@ -1,0 +1,174 @@
+---
+layout: post
+title: Light alternative to compiz grid effect
+date: '2012-06-09T11:40:00.002-07:00'
+author: Unknown
+tags:
+- lxde
+- half-screen
+- compiz grid
+- window
+modified_time: '2012-06-09T12:35:07.993-07:00'
+blogger_id: tag:blogger.com,1999:blog-4501956485444967735.post-3628078881030678429
+blogger_orig_url: https://centosn00b.blogspot.com/2012/06/light-alternative-to-compiz-grid-effect.html
+---
+
+<div dir="ltr" style="text-align: left;" trbidi="on">
+<br />
+Implementing the<br />
+<br />
+<ul style="text-align: left;">
+<li><b>unity</b> - window placement half-screen (ctrl+alt+numpad 4/5)</li>
+<li><b>compiz</b> - grid</li>
+<li><b>windows 7</b> - window half screen (Super + Left/RightArrow)</li>
+</ul>
+<br />
+effect on a 'naked system', without install heavy window&nbsp;management&nbsp;tools like Compiz.<br />
+<br />
+Problem:<br />
+Okay, So I like being efficient with my working&nbsp;environment, especially with my window&nbsp;management,&nbsp;as I don't like wasting space on my 13" laptop screen.<br />
+<br />
+I'm running <b>LXDE</b> with <b>OpenBox</b> and Anders is running <b>gnome2</b> with <b>Metacity</b>.<br />
+<h3 style="text-align: left;">
+
+<br />PyWO - Python Window Organizer</h3>
+The solution is too use the small python script provided by PyWo which can be downloaded from&nbsp;<a href="http://code.google.com/p/pywo/">http://code.google.com/p/pywo/</a>&nbsp;written by&nbsp;<a href="http://kosciak.blox.pl/html">http://kosciak.blox.pl/html</a>.<br />
+In writing I'm using the 0.2 version.<br />
+<br />
+<h3 style="text-align: left;">
+
+
+
+
+<b>Implementation (really easy!)</b>:</h3>
+<ol style="text-align: left;">
+<li>Download version 0.2 from google code, and put in a folder. I put it in ~/settings/pywo-2.0/</li>
+<li>Run the downloaded script (/home/charnley/settings/pywo-2.0/pywo.py)&nbsp;</li>
+<li>DONE</li>
+</ol>
+<div>
+<span style="background-color: white; font-family: arial, sans-serif; font-size: 13px; text-align: -webkit-auto;"><b><br /></b></span><br />
+<span style="background-color: white; font-family: arial, sans-serif; font-size: 13px; text-align: -webkit-auto;"><b>Default keyboard shortcuts:</b></span><br />
+<span style="background-color: white; font-family: arial, sans-serif; font-size: 13px; text-align: -webkit-auto;"><b><br /></b></span><br />
+<br />
+<pre class="prettyprint" style="background-color: #eeeeee; font-family: Monaco, 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Lucida Console', monospace; font-size: 12px; max-width: 70em; overflow: auto; padding: 0.5em; text-align: -webkit-auto;"><span class="typ" style="color: #660066;">Alt</span><span class="pun" style="color: #666600;">-</span><span class="typ" style="color: #660066;">Ctrl</span><span class="pun" style="color: #666600;">-</span><span class="typ" style="color: #660066;">Shift</span><span class="pun" style="color: #666600;">-</span><span class="pln">Q &nbsp; &nbsp;</span><span class="pun" style="color: #666600;">-</span><span class="pln"> </span><span class="kwd" style="color: #000088;">exit</span><span class="pln"> </span><span class="typ" style="color: #660066;">PyWO</span><span class="pln">
+</span><span class="typ" style="color: #660066;">Alt</span><span class="pun" style="color: #666600;">-</span><span class="typ" style="color: #660066;">Ctrl</span><span class="pun" style="color: #666600;">-</span><span class="typ" style="color: #660066;">Shift</span><span class="pun" style="color: #666600;">-</span><span class="pln">R &nbsp; &nbsp;</span><span class="pun" style="color: #666600;">-</span><span class="pln"> reload configuration file</span><span class="typ" style="color: #660066;">Alt</span><span class="pun" style="color: #666600;">-</span><span class="typ" style="color: #660066;">Ctrl</span><span class="pun" style="color: #666600;">-</span><span class="typ" style="color: #660066;">Shift</span><span class="pun" style="color: #666600;">-</span><span class="pln">I &nbsp; &nbsp;</span><span class="pun" style="color: #666600;">-</span><span class="pln"> </span><span class="kwd" style="color: #000088;">print</span><span class="pln"> debug information about window manager </span><span class="kwd" style="color: #000088;">and</span><span class="pln"> current window
+</span><span class="typ" style="color: #660066;">Alt</span><span class="pun" style="color: #666600;">-</span><span class="pln">KP_Divide &nbsp; &nbsp; &nbsp; </span><span class="pun" style="color: #666600;">-</span><span class="pln"> </span><span class="kwd" style="color: #000088;">switch</span><span class="pln"> windows </span><span class="pun" style="color: #666600;">(</span><span class="pln">change position of the window</span><span class="pun" style="color: #666600;">)</span><span class="pln">
+</span><span class="typ" style="color: #660066;">Alt</span><span class="pun" style="color: #666600;">-</span><span class="typ" style="color: #660066;">Shift</span><span class="pun" style="color: #666600;">-</span><span class="pln">KP_Divide </span><span class="pun" style="color: #666600;">-</span><span class="pln"> cycle windows </span><span class="pun" style="color: #666600;">(</span><span class="pln">change contents of the window</span><span class="pun" style="color: #666600;">)</span><span class="pln">
+</span><span class="typ" style="color: #660066;">Alt</span><span class="pun" style="color: #666600;">-</span><span class="pln">KP_1</span><span class="pun" style="color: #666600;">-</span><span class="lit" style="color: #006666;">9</span><span class="pln"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="pun" style="color: #666600;">-</span><span class="pln"> move window </span><span class="kwd" style="color: #000088;">in</span><span class="pln"> a direction </span><span class="pun" style="color: #666600;">(</span><span class="pln">KP_1</span><span class="pun" style="color: #666600;">-</span><span class="lit" style="color: #006666;">9</span><span class="pln"> </span><span class="pun" style="color: #666600;">-</span><span class="pln"> numpad keys</span><span class="pun" style="color: #666600;">)</span><span class="pln">
+</span><span class="typ" style="color: #660066;">Shift</span><span class="pun" style="color: #666600;">-</span><span class="pln">KP_1</span><span class="pun" style="color: #666600;">-</span><span class="lit" style="color: #006666;">9</span><span class="pln"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="pun" style="color: #666600;">-</span><span class="pln"> expand window </span><span class="kwd" style="color: #000088;">in</span><span class="pln"> a direction </span><span class="pun" style="color: #666600;">(</span><span class="lit" style="color: #006666;">5</span><span class="pln"> works </span><span class="kwd" style="color: #000088;">as</span><span class="pln"> maximumize compiz plugin</span><span class="pun" style="color: #666600;">)</span><span class="pln">
+</span><span class="typ" style="color: #660066;">Alt</span><span class="pun" style="color: #666600;">-</span><span class="typ" style="color: #660066;">Shift</span><span class="pun" style="color: #666600;">-</span><span class="pln">KP_1</span><span class="pun" style="color: #666600;">-</span><span class="lit" style="color: #006666;">9</span><span class="pln"> &nbsp; &nbsp;</span><span class="pun" style="color: #666600;">-</span><span class="pln"> shrink window</span><span class="typ" style="color: #660066;">Alt</span><span class="pun" style="color: #666600;">-</span><span class="typ" style="color: #660066;">Ctrl</span><span class="pun" style="color: #666600;">-</span><span class="pln">KP_1</span><span class="pun" style="color: #666600;">-</span><span class="lit" style="color: #006666;">9</span><span class="pln"> &nbsp; &nbsp; </span><span class="pun" style="color: #666600;">-</span><span class="pln"> put window to predefined position</span><span class="typ" style="color: #660066;">Ctrl_KP_1</span><span class="pun" style="color: #666600;">-</span><span class="lit" style="color: #006666;">9</span><span class="pln"> &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="pun" style="color: #666600;">-</span><span class="pln"> put </span><span class="kwd" style="color: #000088;">and</span><span class="pln"> resize </span><span class="pun" style="color: #666600;">(</span><span class="pln">grid</span><span class="pun" style="color: #666600;">),</span><span class="pln"> </span><span class="kwd" style="color: #000088;">and</span><span class="pln"> cycle widths</span><span class="typ" style="color: #660066;">Ctrl</span><span class="pun" style="color: #666600;">-</span><span class="typ" style="color: #660066;">Shift_KP_1</span><span class="pun" style="color: #666600;">-</span><span class="lit" style="color: #006666;">9</span><span class="pln"> &nbsp; </span><span class="pun" style="color: #666600;">-</span><span class="pln"> put </span><span class="kwd" style="color: #000088;">and</span><span class="pln"> resize </span><span class="pun" style="color: #666600;">(</span><span class="pln">grid</span><span class="pun" style="color: #666600;">),</span><span class="pln"> </span><span class="kwd" style="color: #000088;">and</span><span class="pln"> cycle heights</span></pre>
+</div>
+<div>
+<br />
+Note, the default&nbsp;configuration&nbsp;is to use the numpad as the control, but being a laptop user this is not an option. So my setup is:</div>
+<div>
+<h3 style="text-align: left;">
+
+
+
+
+Laptop configuration:</h3>
+</div>
+<div>
+Create ~/.pyworc and fill in:<br />
+<br />
+<br />
+<pre>[SETTINGS]
+; 1/on/yes/true - work only when NumLock is on
+; ignore - ignore NumLock state (works when on and off)
+; 0/off/no/false - work only when NumLock is off
+numlock = ignore
+
+; invert window gravity if it needs resizing (eg terminals with incremental
+; size change), works only for grid
+invert_on_resize = yes
+
+; if true try expandig in vertical axis first
+vertical_first = yes
+
+; grid_2x2, grid_3x2, grid_3x3, custom
+layout = grid_2x2
+
+;ignore_actions = grid_height
+
+[KEYS]
+; section/point-name =  key
+top-left = KP_7
+top = KP_8
+top-right = KP_9
+left = Left
+middle = Up
+right = Right
+bottom-right = KP_3
+bottom = KP_2
+bottom-left = KP_1
+
+switch = Alt-KP_Divide
+cycle = Alt-Shift-KP_Divide
+
+; key modifiers (Alt, Shift, Ctrl, Super) for actions
+float = Alt-Shift
+expand = Alt-Shift
+shrink = Alt-Shift
+put = Super-Ctrl
+; cycle widths
+grid_width = Super
+; cycle heights
+grid_height = Ctrl-Shift
+
+; exit PyWo
+exit = Ctrl-Shift-Alt-Q
+; reload configuration file
+reload = Ctrl-Shift-Alt-R
+; print info for current window
+debug = Ctrl-Shift-Alt-I
+</pre>
+</div>
+<br />
+<br />
+I changed the configuration so it works almost like the windows alternative, with arrow and super key.<br /><br />
+Grid: <b>2x2</b><br />
+<br />
+Shortcuts:<br />
+<b>Super+Left Arrow &nbsp;= fill left half of screen</b><br />
+<b>Super+Right Arrow = fill right half of screen</b><br />
+<b>Super+Arrow Up = fill full screen</b><br />
+<b><br /></b><br />
+For list of shortcut/keys&nbsp;available check:<br />
+<a href="http://python-xlib.svn.sourceforge.net/viewvc/python-xlib/trunk/Xlib/keysymdef/miscellany.py?revision=151&amp;view=markup&amp;pathrev=151">http://python-xlib.svn.sourceforge.net/viewvc/python-xlib/trunk/Xlib/keysymdef/miscellany.py?revision=151&amp;view=markup&amp;pathrev=151</a><br />
+<a href="http://python-xlib.svn.sourceforge.net/viewvc/python-xlib/trunk/Xlib/keysymdef/latin1.py?revision=151&amp;view=markup&amp;pathrev=151">http://python-xlib.svn.sourceforge.net/viewvc/python-xlib/trunk/Xlib/keysymdef/latin1.py?revision=151&amp;view=markup&amp;pathrev=151</a><br />
+<b><br /></b><br />
+<br />
+<h3 style="text-align: left;">
+
+<b>Autostart the script:</b></h3>
+<h4 style="text-align: left;">
+
+LXDE:</h4>
+To autostart a script in LXDE you create a .desktop file in ~/.config/autostart/.<br />
+If you are a awesome LXDE user, create <b>~/.config/autostart/pywo.desktop</b> and fill in the following:<br />
+<br />
+<br />
+<pre>[Desktop Entry]
+Encoding=UTF-8
+Name=PyWo
+Comment=Python Window Organizer
+Exec=/home/charnley/settings/pywo-0.2/pywo.py
+X-GNOME-Autostart-enabled=true
+</pre>
+<br />
+Where you&nbsp;substitute&nbsp;the Exec with the path to where you downloaded pywo too.<br />
+<br />
+<br />
+<br />
+And that is it! Happy windowing!<br />
+<pre><div style="font-family: 'Times New Roman'; white-space: normal;">
+</div>
+</pre>
+<pre></pre>
+<pre></pre>
+<pre></pre>
+<pre></pre>
+<pre></pre>
+</div>

@@ -1,0 +1,43 @@
+---
+layout: post
+title: Biopython tip
+date: '2012-05-14T03:59:00.002-07:00'
+author: hellogetmyblogback
+tags:
+modified_time: '2012-05-14T03:59:41.281-07:00'
+blogger_id: tag:blogger.com,1999:blog-4501956485444967735.post-993696248732923546
+blogger_orig_url: https://centosn00b.blogspot.com/2012/05/biopython-tip.html
+---
+
+Installing Biopython on CentOS is easy. You need the following:<br />
+<br />
+<br />
+If haven't already done so install this (rather large) package. It loosely corresponds to what I was used to in Ubuntu as "build-essential":<br />
+<br />
+<div style="font-family: &quot;Courier New&quot;,Courier,monospace;">
+<b>yum groupinstall 'Development Tools' </b></div>
+<br />
+You&nbsp; also need this package, or it won't compile (it's not included in "Development Tools):<b><br style="font-family: &quot;Courier New&quot;,Courier,monospace;" /></b><br />
+<div style="font-family: &quot;Courier New&quot;,Courier,monospace;">
+<b><br /></b></div>
+<div style="font-family: &quot;Courier New&quot;,Courier,monospace;">
+<b>yum install python-devel</b></div>
+<div style="font-family: &quot;Courier New&quot;,Courier,monospace;">
+<br /></div>
+<div style="font-family: &quot;Courier New&quot;,Courier,monospace;">
+<b># Now the fun stuff: </b></div>
+<div style="font-family: &quot;Courier New&quot;,Courier,monospace;">
+<b>wget http://biopython.org/DIST/biopython-1.59.tar.gz</b></div>
+<div style="font-family: &quot;Courier New&quot;,Courier,monospace;">
+<b>tar xf biopython-1.59.tar.gz</b></div>
+<div style="font-family: &quot;Courier New&quot;,Courier,monospace;">
+<b>cd biopython-1.59</b></div>
+<div style="font-family: &quot;Courier New&quot;,Courier,monospace;">
+<b>python setup.py build</b></div>
+<div style="font-family: &quot;Courier New&quot;,Courier,monospace;">
+<b>python setup.py test</b></div>
+<div style="font-family: &quot;Courier New&quot;,Courier,monospace;">
+<b>python setup.py install</b></div>
+<br />
+<br />
+Happy biopython'ing!<br />

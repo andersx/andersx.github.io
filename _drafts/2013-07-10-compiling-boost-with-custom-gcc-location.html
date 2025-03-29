@@ -1,0 +1,61 @@
+---
+layout: post
+title: Compiling BOOST with custom GCC location
+date: '2013-07-10T02:25:00.001-07:00'
+author: hellogetmyblogback
+tags:
+modified_time: '2013-07-10T02:25:18.835-07:00'
+blogger_id: tag:blogger.com,1999:blog-4501956485444967735.post-3923247118804156254
+blogger_orig_url: https://centosn00b.blogspot.com/2013/07/compiling-boost-with-custom-gcc-location.html
+---
+
+Compiling BOOST on our shared cluster running CentOS 5 is always a pain in the neck. The default GCC version is 4.1, so compiling programs with just the default GCC is not always the best choice.<br />
+I was trying to compile a program that depends on BOOST, and figuring out how to specify non-default compilers to BOOST took me a while to figure out.<br />
+<br />
+Download your version of BOOST and untar:<br />
+<br />
+<pre>wget http://sourceforge.net/projects/boost/files/boost/1.52.0/boost_1_52_0.tar.bz2
+tar xjf boost_1_52_0.tar.bz2
+</pre>
+<br />
+<br />
+Find the user-config.jam file (this is where the magic happens) and edit:<br />
+<br />
+<pre>cd boost_1_52_0
+vim tools/build/v2/user-config.jam
+</pre>
+<br />
+<br />
+Add the line corresponding to your C++ compiler (In my case G++ 4.4). The user-config.jam file loosk something like: <br />
+<br />
+<pre># ------------------
+# GCC configuration.
+# ------------------
+
+# Configure gcc (default version).
+# using gcc ;
+# Configure specific gcc version, giving alternative name to use.
+# using gcc : 3.2 : g++-3.2 ;
+using gcc : 4.4 : /usr/bin/g++44 ;
+</pre>
+<br />
+The syntax is:<br />
+<br />
+<pre>using &lt;toolset name&gt; : &lt;version&gt; : &lt;executable&gt; ;
+
+</pre>
+<br />
+See more info here: <a href="http://www.boost.org/boost-build2/doc/html/bbv2/reference/tools.html">http://www.boost.org/boost-build2/doc/html/bbv2/reference/tools.html</a><br />
+<br />
+Now bootstrap BOOST as you normally would:<br />
+<br />
+<pre>./bootstrap.sh --prefix=/opt/boost_1_52_0_gcc44
+</pre>
+<br />
+And compile! Use the -d2 option to up the debug level of b2, so you can see the actual compile command (and check that b2 is using the correct compiler):<br />
+<br />
+<pre>./b2 -d 2
+./b2 install
+</pre>
+<br />
+Tell your mother of that awesome blog post you just read.

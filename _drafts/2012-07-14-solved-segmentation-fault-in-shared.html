@@ -1,0 +1,68 @@
+---
+layout: post
+title: "[SOLVED] segmentation fault in shared-mime-types - Ubuntu 10.04 LTS"
+date: '2012-07-14T14:35:00.001-07:00'
+author: hellogetmyblogback
+tags:
+- maverick
+- ubuntu
+- '10.10'
+- '10.04'
+- fault
+- lucid
+- libxml2
+- '9.10'
+- karmic
+- LTS
+- segmentation
+- shared-mime-info
+modified_time: '2012-07-17T04:39:51.652-07:00'
+blogger_id: tag:blogger.com,1999:blog-4501956485444967735.post-8531377252991078947
+blogger_orig_url: https://centosn00b.blogspot.com/2012/07/solved-segmentation-fault-in-shared.html
+---
+
+I just did a kernel + gfx driver upgrade on our Beowulf cluster (Running Ubuntu 10.04 LTS Server), <b style="font-family: &quot;Courier New&quot;,Courier,monospace;">`hostname`=sunray</b>.<br />
+<br />
+However, <b><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">apt-get upgrade</span></b> choked (with nothing less than a segmentation fault) when I tried to update the package <b style="font-family: &quot;Courier New&quot;,Courier,monospace;">'shared-mine-types'</b>. Even a <b style="font-family: &quot;Courier New&quot;,Courier,monospace;">gdb</b> backtrace wasn't helpful at all. <br />
+<br />
+I could replicate the seg/fault by trying to update the mime database:<br />
+<div style="font-family: &quot;Courier New&quot;,Courier,monospace;">
+<b><br /></b></div>
+<b><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">sudo update-mime-database -V /usr/share/mime</span></b><br />
+<br />
+The workaround I found was pretty easy (though also ugly). The problem is a conflict with an early version of <b><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">libxml2</span></b> and <b style="font-family: &quot;Courier New&quot;,Courier,monospace;">libxml2-dev</b>. The workaround is to do this (pull never versions from Ubuntu 10.10 (Maverick)):<br />
+<br />
+<div style="font-family: &quot;Courier New&quot;,Courier,monospace;">
+<b>sudo -s</b></div>
+<div style="font-family: &quot;Courier New&quot;,Courier,monospace;">
+<b>apt-get update </b></div>
+<div style="font-family: &quot;Courier New&quot;,Courier,monospace;">
+<b>apt-get purge&nbsp; shared-mime-info </b></div>
+<div style="font-family: &quot;Courier New&quot;,Courier,monospace;">
+<b>cd /root/</b></div>
+<div style="font-family: &quot;Courier New&quot;,Courier,monospace;">
+<b>wget https://launchpad.net/~ubuntu-security/+archive/ppa/+build/3103171/+files/libxml2-dev_2.7.7.dfsg-4ubuntu0.3_amd64.deb</b></div>
+<div style="font-family: &quot;Courier New&quot;,Courier,monospace;">
+<b>wget https://launchpad.net/~ubuntu-security/+archive/ppa/+build/3103171/+files/libxml2_2.7.7.dfsg-4ubuntu0.3_amd64.deb</b></div>
+<div style="font-family: &quot;Courier New&quot;,Courier,monospace;">
+<b>dpkg -i libxml2-dev_2.7.7.dfsg-4ubuntu0.3_amd64.deb</b></div>
+<div style="font-family: &quot;Courier New&quot;,Courier,monospace;">
+<b>dpkg -i libxml2_2.7.7.dfsg-4ubuntu0.3_amd64.deb</b></div>
+<div style="font-family: &quot;Courier New&quot;,Courier,monospace;">
+<b>apt-get install shared-mime-info</b></div>
+<br />
+Now you should be able to do:<br />
+<br />
+<b><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">apt-get upgrade</span></b><br />
+<br />
+^_^<br />
+<br />
+<br />
+<br />
+The specs of the Ubuntu is 10.04.4 LTS (Lucid) with a custom compilation of <b style="font-family: &quot;Courier New&quot;,Courier,monospace;">gdm-2.20</b> from Ubuntu 9.10 (Karmic).<br />
+<br />
+Happy <b><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">apt-get upgrade</span></b><span style="font-family: inherit;">'ing!</span><br />
+<br />
+<br />
+<div class="separator" style="clear: both; text-align: center;">
+<a href="http://cdn.memegenerator.net/instances/400x/23581484.jpg" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" src="http://cdn.memegenerator.net/instances/400x/23581484.jpg" /></a></div>

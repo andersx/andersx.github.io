@@ -1,0 +1,66 @@
+---
+layout: post
+title: Spotify on CentOS 6
+date: '2012-05-08T11:24:00.000-07:00'
+author: hellogetmyblogback
+tags:
+- centos
+- spotify
+- alien
+- git
+- centos 6.2
+- centos 6
+modified_time: '2012-05-08T12:20:07.163-07:00'
+blogger_id: tag:blogger.com,1999:blog-4501956485444967735.post-2992683501907224484
+blogger_orig_url: https://centosn00b.blogspot.com/2012/05/spotify-on-centos-6.html
+---
+
+There is no installation for Spotify on CentOS, and there are some whacked dependencies which are cumbersome to get around. I tried this on CentOS 6.2<br />
+<br />
+First install Alien (and git):<br />
+<br />
+<div style="font-family: &quot;Courier New&quot;,Courier,monospace;">
+<b>yum install git make</b></div>
+<div style="font-family: &quot;Courier New&quot;,Courier,monospace;">
+<b>git clone git://git.kitenet.net/alien</b></div>
+<div style="font-family: &quot;Courier New&quot;,Courier,monospace;">
+<b>cd alien/</b></div>
+<div style="font-family: &quot;Courier New&quot;,Courier,monospace;">
+<b>perl Makefile.PL; make; make install</b></div>
+<br />
+Now download spotify .deb files from: <br />
+<a href="http://www.blogger.com/goog_94963542"></a><br />
+<a href="http://repository.spotify.com/pool/non-free/s/spotify/">http://repository.spotify.com/pool/non-free/s/spotify/</a><br />
+<br />
+<br />
+Convert and install the Debian/Ubuntu packages:<br />
+<div style="font-family: &quot;Courier New&quot;,Courier,monospace;">
+<b><br /></b></div>
+<div style="font-family: &quot;Courier New&quot;,Courier,monospace;">
+<b>alien --to-rpm spotify-client-qt*.deb</b></div>
+<div style="font-family: &quot;Courier New&quot;,Courier,monospace;">
+<b>rpm -Uvh --nodeps spotify-client-qt*.rpm </b></div>
+<div style="font-family: &quot;Courier New&quot;,Courier,monospace;">
+<b>alien --to-rpm spotify-client*.deb </b></div>
+<div style="font-family: &quot;Courier New&quot;,Courier,monospace;">
+<b>rpm -Uvh --nodeps spotify-client*.rpm </b></div>
+<br />
+You're almost done! Now download my <i>magical</i> package of required libraries:<br />
+<a href="http://dl.dropbox.com/u/17435887/CentOS6/andersx/spotify_libs.tar.gz">http://dl.dropbox.com/u/17435887/CentOS6/andersx/spotify_libs.tar.gz</a><br />
+<br />
+Extract these in your home folder. It'll create a directory and a file named (in my case):<br />
+<div style="font-family: &quot;Courier New&quot;,Courier,monospace;">
+<b><br /></b></div>
+<div style="font-family: &quot;Courier New&quot;,Courier,monospace;">
+<b>/home/andersx/spotify_libs</b></div>
+<b><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">/home/andersx/spotify.sh</span></b> <br />
+<br />
+Edit the .sh file so it points to your home directory. In my case:<br />
+<b><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">export LD_LIBRARY_PATH=/home/andersx/spotify_libs</span></b><br />
+<br />
+The libraries in <b><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">spotify_libs</span></b> were carefully taken from a Ubuntu 10.04 LTS, and in order to NOT mess up your CentOS, use the supplied script to start Spotify without exporting it to your <b><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">$LD_LIBRARY_PATH</span></b> when you don't need it.<br />
+<br />
+Of course feel free to put the libraries and launcher script somewhere else.<br />
+<br />
+Happy listening! <br />
+:wq
