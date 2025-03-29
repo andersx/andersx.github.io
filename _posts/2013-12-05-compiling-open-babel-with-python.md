@@ -9,6 +9,9 @@ blogger_id: tag:blogger.com,1999:blog-8160351477288734008.post-32373092385129789
 blogger_orig_url: https://combichem.blogspot.com/2013/12/compiling-open-babel-with-python.html
 ---
 
+This blog will show you how to compile **Open Babel** from source with Python bindings. 
+
+
 ## 🛠️ How to Compile Open Babel with Python Bindings
 
 Use the commands below to compile **Open Babel** from source with Python bindings:

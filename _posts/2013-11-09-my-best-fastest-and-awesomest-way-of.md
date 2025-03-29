@@ -20,47 +20,50 @@ If you use this post you will accomplish the following:
 
 I see many people still using .eps files from matplotlib in their otherwise nicely formatted Latex document.  Forget this. From this post on we use matplotlib figures in .pdf format. It works exactly as with .eps or .png or what else you might be using:
 
-
-
+```latex
+\begin{figure}
+    \begin{center}
+        \includegraphics[width=8.3cm]{my_figure.pdf}
+        \caption{This is my figure.}
+    \end{center}
+\end{figure}
+```
 
 Let's also use pdflatex for compiling (just replace the latex command):
-
-
-
-
 ```
 andersx@awesome:~/my\_paper$ pdflatex mypaper.tex
 
 ```
 
-
-
 This will also compile much faster than standard latex (using, say, .png-files), since you are now including something that is already in pdf-format.
-
-
 
 Last two steps are (1) to save your file as a .pdf-file and (2) autocrop the white borders (loss-less). Step one is accomplished using standard matplotlib/pylab/etc. syntax. The 2nd part is done using a tool called pdfcrop (which is already included in you have latex installed). I prefer to call pdfcrop from within the Python script to avoid having to run more than one command each time I make a new figure.
 
+```python
+import pylab 
+import numpy 
+import os
 
+# Make a simple plot
+x = numpy.arange(1, 100, 1)
+y = x**2
+pylab.plot(x, y)
+
+# Define a filename (remember the .pdf)
+filename = "my_file.pdf"
+
+# Save and convert!
+pylab.savefig(filename)
+os.system("pdfcrop %s %s" % (filename, filename))
+```
 
 The above is some boilerplate code. The result is:
-
-
-
-
 ```
 andersx@awesome:~/my\_paper$ python my\_figure.py
 PDFCROP 1.33, 2012/02/01 - Copyright (c) 2002-2012 by Heiko Oberdiek.
 ==> 1 page written on `my\_file.pdf'.
 andersx@awesome:~/my\_paper$
 ```
-
-
-
 Now you have a beautifully formatted pdf-file to include in  your latex document.
 
-
-
 I might edit this post later with a bit of bling and YOLO/swag just to give it the attractive combination of vitality and glamour it deserves.
-
-
