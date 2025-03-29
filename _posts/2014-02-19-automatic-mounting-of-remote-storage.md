@@ -4,59 +4,58 @@ title: Automatic mounting of remote storage via SSHFS on Amazon EC2 instances
 date: '2014-02-19T11:04:00.004+01:00'
 author: hellogetmyblogback
 tags:
-modified\_time: '2014-02-19T11:04:56.776+01:00'
-blogger\_id: tag:blogger.com,1999:blog-8160351477288734008.post-2446382380226116797
-blogger\_orig\_url: https://combichem.blogspot.com/2014/02/automatic-mounting-of-remote-storage.html
+modified_time: '2014-02-19T11:04:56.776+01:00'
+blogger_id: tag:blogger.com,1999:blog-8160351477288734008.post-2446382380226116797
+blogger_orig_url: https://combichem.blogspot.com/2014/02/automatic-mounting-of-remote-storage.html
 ---
 
-In this blog I demonstrate how you can create an Amazon EC2 instance image that will automount a folder on a remote server via SSHFS.
+In this blog I demonstrate how you can create an Amazon EC2 instance image that will **automount a folder on a remote server via SSHFS**.
 
-The purpose here is to fire up a EC2 compute server, run a program and save the output from that program on our local compute cluster at the university.
+The purpose here is to fire up an EC2 compute server, run a program, and save the output from that program on our **local compute cluster** at the university.
 
-Basically, you just need to a line to /etc/fstab and save the instance as an image (that's what I did).
+Basically, you just need to add a line to `/etc/fstab` and save the instance as an image (that’s what I did).
 
+---
 
+### 🧰 What you need:
 
+- An Amazon EC2 instance with **sshfs** installed.
+- A user with **SSH keys properly set up** to access the remote system (the SSH keys **must not require a passphrase**).
 
+---
 
-What you need:
+Let’s say your **remote server** has a folder named `remote_folder`  
+And your EC2 instance has a local mount point at `local_folder`.
 
+Amazon EC2 Ubuntu instances typically use the `ubuntu` user, so the example assumes that.
 
+Here’s the line to add to `/etc/fstab` (all on **one line**):
 
-* An Amazon EC2 instance with sshfs installed.
-* A user with SSH keys properly setup to the remote system (the SSH keys cannot require a passphrase).
+```fstab
+sshfs#ubuntu@remoteserver:/home/ubuntu/remote_folder/ /home/ubuntu/local_folder/ fuse user,delay_connect,_netdev,reconnect,uid=1000,gid=1000,IdentityFile=/home/ubuntu/.ssh/id_rsa,idmap=user,allow_other,workaround=rename 0 0
+```
 
+**Notes:**
+- `IdentityFile` should point to your **private SSH key**.
+- `_netdev` ensures the mount happens **after the network is available**.
+- `reconnect` attempts automatic reconnection.
+- `delay_connect` and `workaround=rename` are often needed to avoid weird mount issues (especially on boot).
 
-Your remote server has a folder that is named remote\_folder and your instance has a folder named local\_folder. The default username on Amazon is "Ubuntu" for Ubuntu instances, so I'm using this as an example.
+⚠️ **Don’t forget the trailing slashes** (`/`) on both folder paths — it won’t work without them (speaking from bitter experience!).
 
+---
 
+### 🔄 Optional: Prevent SSH disconnects
 
-# sshfs#ubuntu@remoteserver:/home/ubuntu/remote\_folder/ /home/ubuntu/local\_folder/  fuse    user,delay\_connect,\_netdev,reconnect,uid=1000,gid=1000,IdentityFile=/home/ubuntu/.ssh/id\_rsa,idmap=user,allow\_other,workaround=rename  0   0
+To avoid idle SSH sessions timing out, add this line to your `/etc/ssh/ssh_config`:
 
+```ssh
+ServerAliveInterval 5
+```
 
+This sends a keep-alive signal every 5 seconds.
 
-Everything is one long line that goes into /etc/fstab. The IdentityFile points to your SSH key. You need the "\_netdev" keywords to mount the SSHFS folder after network becomes available. The "reconnect" keyword does what it reads, so throw that in as well.
+---
 
-I read a few posts from other people who had difficulties mounting SSHFS properly without the "delay\_connect" and "workaround=rename" keywords, so I added those for good measure.
-
-
-
-Note that you need the trailing / after the folder names! I won't work without (and I'm talking from bitter experience here).
-
-
-
-Furthermore, you want to add the following line to /etc/ssh/ssh\_config
-
-
-
-# ServerAliveInterval 5
-
-
-
-This makes SSH send a keep alive signal every 5 seconds so you don't get disconnected due to being idle.
-
-
-
-Apart from that I think the above should be self-explanatory (for someone looking for this information).
-
-
+That’s it!  
+Simple, minimal, and works well when you're spinning up EC2 machines to crunch data and dump output to a shared server.
