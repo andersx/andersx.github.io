@@ -1,0 +1,87 @@
+---
+layout: post
+title: Compiling DALTON2011 with 64-bit integers, OpenMPI and MKL
+date: '2011-10-29T10:59:00.004+02:00'
+author: hellogetmyblogback
+tags:
+- dalton intel compile openmpi integers 64-bit integers 64 bit icc icpc ifort openmpi
+  openmpi-1.4.3 dirac
+modified_time: '2011-10-30T09:09:15.843+01:00'
+blogger_id: tag:blogger.com,1999:blog-8160351477288734008.post-3200098717966050502
+blogger_orig_url: https://combichem.blogspot.com/2011/10/compiling-dalton2011-with-64-bit.html
+---
+
+<div style="color: black;">I was asked if I could do a blog post about how to compile DALTON2011 in parallel with 64-bit integers. This is not entirely trivial, unless you know what's going on. One of the key ingredients is an MPI that supports 64-bit integers, which OpenMPI does not do out of the box. I found 64-bit integers required to complete all test cases succesfully. This tutorial will assume that you have a working set of Intel compilers.</div><div style="color: black;"><br />
+</div><div style="color: black;">1) Get the OpenMPI 1.4.3, which is the latest stable version to support 64-bit integers:</div><div style="color: black; font-family: &quot;Courier New&quot;,Courier,monospace;"><br />
+</div><div style="color: black; font-family: &quot;Courier New&quot;,Courier,monospace;">wget http://www.open-mpi.org/software/ompi/v1.4/downloads/openmpi-1.4.3.tar.bz2</div><div style="color: black; font-family: &quot;Courier New&quot;,Courier,monospace;">tar xjf openmpi-1.4.3.tar.bz2</div><div style="color: black; font-family: &quot;Courier New&quot;,Courier,monospace;">cd openmpi-1.4.3/</div><div style="color: black;"><br />
+</div><div style="color: black;"><br />
+</div><div style="color: black;">2) Now you're ready to compile OpenMPI. I keep my compiled programs in <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">~/programs/</span> -- you can use whatever directory you want, so change the prefix to wherever you want it. If you have root access <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">/opt/</span> would be a great place to put OpenMPI. First, export the CXX, CC, FC and F77 environment variables to specify that you want to use the dedicated Intel compilers. Then run the configure script with the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">-i8</span> flag, specifying support for 64-bit integers:</div><div style="color: black;"><br />
+</div><div style="color: black; font-family: &quot;Courier New&quot;,Courier,monospace;">export CC=icc; export CXX=icpc; export FC=ifort; export F77=ifort</div><div style="color: black; font-family: &quot;Courier New&quot;,Courier,monospace;">FFLAGS=-i8 FCFLAGS=-i8 ./configure --prefix=/home/andersx/programs/openmpi-1.4.3/</div><div style="color: black; font-family: &quot;Courier New&quot;,Courier,monospace;">make</div><div style="color: black; font-family: &quot;Courier New&quot;,Courier,monospace;">make install </div><div style="color: black;"><br />
+</div><div style="color: black;">(both <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">configure</span> and <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">make</span> can take quite a while)</div><div style="color: black;"><br />
+</div><div style="color: black;"><br />
+</div><div style="color: black;">3) Now, you need to export the following variables:</div><div style="color: black;"><br />
+</div><div style="color: black; font-family: &quot;Courier New&quot;,Courier,monospace;">export PATH=/home/andersx/programs/openmpi-1.4.3/bin:$PATH</div><div style="color: black; font-family: &quot;Courier New&quot;,Courier,monospace;">export LD_LIBRARY_PATH=/home/andersx/programs/openmpi-1.4.3/lib:$LD_LIBRARY_PATH</div><div style="color: black;"><br />
+</div><div style="color: black;">You can also add these lines to you <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">~/.bashrc</span> file, but I wouldn't recommend this, since you might want another version of OpenMPI for another program, so it's better to only export the variables you need, when you actually need them.</div><div style="color: black;"><br />
+</div><div style="color: black;">Check that your compiled OpenMPI is working by typing:</div><div style="color: black;"><br />
+</div><div style="color: black; font-family: &quot;Courier New&quot;,Courier,monospace;">which mpirun</div><div style="color: black;"><br />
+</div><div style="color: black;">This should return something like (in the folder you specified in the<span style="font-family: &quot;Courier New&quot;,Courier,monospace;"> --prefix </span>in step 2):</div><div style="color: black; font-family: &quot;Courier New&quot;,Courier,monospace;"><br />
+</div><div style="color: black; font-family: &quot;Courier New&quot;,Courier,monospace;">/home/andersx/programs/openmpi-1.4.3/bin/mpirun</div><div style="color: black;"><br />
+</div><div style="color: black;">Further more, check that your OpenMPI picked up the<span style="font-family: &quot;Courier New&quot;,Courier,monospace;"> -i8 </span>flag properly (the compiler flag that tells to compile for 64-bit integers):</div><div style="color: black;"><br />
+</div><div style="color: black; font-family: &quot;Courier New&quot;,Courier,monospace;">ompi_info -a | grep 'Fort integer size' </div><div style="color: black;"><br />
+</div><div style="color: black;">This must return size 8:</div><div style="color: black; font-family: &quot;Courier New&quot;,Courier,monospace;"><br />
+</div><div style="color: black; font-family: &quot;Courier New&quot;,Courier,monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Fort integer size: 8</div><div style="color: black;"><br />
+</div><div style="color: black;">If not, you did something wrong, and the following steps will not work!</div><div style="color: black;"><br />
+</div><div style="color: black;"><br />
+</div><div style="color: black;">4) Go to <a href="http://dirac.chem.sdu.dk/daltonprogram.org/www/download.html">http://dirac.chem.sdu.dk/daltonprogram.org/www/download.html</a> and download the latest version. Untar it, and head into the DALTON2011 folder:</div><div style="color: black;"><br />
+</div><div style="color: black; font-family: &quot;Courier New&quot;,Courier,monospace;">tar xjf Dalton2011_release_v0.tbz</div><div style="color: black; font-family: &quot;Courier New&quot;,Courier,monospace;">cd Dalton2011_release/DALTON/</div><div style="color: black;"><br />
+</div><div style="color: black;">Start the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">configure</span> script and answer the following questions with:</div><div style="color: black;"><br />
+</div><div style="color: black; font-family: &quot;Courier New&quot;,Courier,monospace;">This appears to be a -linux architecture. Is this correct? [Y/n] y</div><div style="color: black; font-family: &quot;Courier New&quot;,Courier,monospace;">Do you want 64-bit integers? [y/N] y</div><div style="color: black; font-family: &quot;Courier New&quot;,Courier,monospace;">Do you want to install the program in a parallel MPI version? [Y/n] y</div><div style="color: black; font-family: &quot;Courier New&quot;,Courier,monospace;">Compiler /home/andersx/programs/openmpi-1.4.3/bin/mpif90 found, use this compiler? [Y/n] y</div><div style="color: black;">(This must be found in the folder where you just compiled and installed OpenMPI in steps 1-3)</div><div style="color: black; font-family: &quot;Courier New&quot;,Courier,monospace;">Compiler /home/andersx/programs/openmpi-1.4.3/bin/mpicc found, use this compiler? [Y/n] y</div><div style="color: black;">(This must be found in the folder where you just compiled and installed OpenMPI in steps 1-3)</div><div style="color: black; font-family: &quot;Courier New&quot;,Courier,monospace;">Do you want to replace this with your own directory search list? [y/N] n</div><div style="color: black;">(Just install whatever BLAS/LAPACK the script finds .. we're going to use MKL, but we need to specify that manually later on, overriding what the script finds here)</div><div style="color: black;"><br />
+</div><div style="color: black;">The remaining questions you can answer however you want to.</div><div style="color: black;"><br />
+</div><div style="color: black;">5) Now we need to find out, where MKL is placed on you system. This may vary from version to version of the Intel Compiler suite. First write:</div><div style="color: black;"><br />
+</div><div style="color: black; font-family: &quot;Courier New&quot;,Courier,monospace;">env | grep MKL</div><div style="color: black;"><br />
+</div><div style="color: black;">This returns something like:</div><div style="color: black;"><br />
+</div><div style="color: black; font-family: &quot;Courier New&quot;,Courier,monospace;">MKLROOT=/opt/intel/composerxe-2011.0.084/mkl</div><div style="color: black;"><br />
+</div><div style="color: black;">If it doesn't, you haven't got the Intel Compilers (and MKL) properly installed. Now head into this directory and <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">locate libmkl_intel_ilp64.a:</span></div><div style="color: black;"><br />
+</div><div style="color: black; font-family: &quot;Courier New&quot;,Courier,monospace;">cd $MKLROOT</div><div style="color: black; font-family: &quot;Courier New&quot;,Courier,monospace;">locate libmkl_intel_ilp64.a</div><div style="color: black;"><br />
+</div><div style="color: black;">This returns something like:</div><div style="color: black; font-family: &quot;Courier New&quot;,Courier,monospace;"><br />
+</div><div style="color: black; font-family: &quot;Courier New&quot;,Courier,monospace;">/opt/intel/composerxe-2011.0.084/mkl/lib/intel64/libmkl_intel_ilp64.a</div><div style="color: black;"><br />
+</div><div style="color: black;">The above directory we will call <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">MKL_LIB_DIR</span>:</div><div style="color: black;"><br />
+</div><div style="color: black; font-family: &quot;Courier New&quot;,Courier,monospace;">export MKL_LIB_DIR=/opt/intel/composerxe-2011.0.084/mkl/lib/intel64</div><div style="color: black;"><br />
+</div><div style="color: black;">Last thing in this step is to edit the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">Makefile.config</span> and put the information we now have into it. Open <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">Makefile.config</span> with your favourite editor and replace the line that starts with "<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">LIBS =</span> " with:</div><div style="color: black;"><br />
+</div><div style="color: black; font-family: &quot;Courier New&quot;,Courier,monospace;">LIBS          = -L/usr/lib -lmkl_lapack95_ilp64 -Wl,--start-group $(MKL_LIB_DIR)/libmkl_intel_ilp64.a $(MKL_LIB_DIR)/libmkl_sequential.a $(MKL_LIB_DIR)/libmkl_core.a -Wl,--end-group -lpthread</div><div style="color: black;">(the above is all in <i>one</i> line)</div><div style="color: black;"><br />
+</div><div style="color: black;">This will link to the correct MKL library, which supports 64-bit integers (also why they're called ilp64) and made for the Intel compilers. Now it's a good time to make sure that you still have the environment variables from step 3) exported. So now we're ready to actually compile DALTON2011:</div><div style="color: black;"><br />
+</div><div style="color: black; font-family: &quot;Courier New&quot;,Courier,monospace;">make</div><div style="color: black;"><br />
+</div><div style="color: black;">(now it's time to get a coffee, and do something else for a <i>long </i>while ... Also compiling DALTON2011 does not seem to work in parallel so no<span style="font-family: &quot;Courier New&quot;,Courier,monospace;"> -j8 </span>flags here!)</div><div style="color: black;"><br />
+</div><div style="color: black;"></div><div style="color: black;">6) Compiling ends without errors and the following line:</div><div style="color: black;"><br />
+</div><div style="color: black;"><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">mv ./dalton_mpi.x /home/andersx/zips/Dalton2011_release/bin/dalton_mpi.x</span></div><div style="color: black;"><br />
+</div><div style="color: black;">To test your compilation head into the test/ folder and start testing the parallel (these only take a minute or so .. the full test suite takes much longer).</div><div style="color: black; font-family: &quot;Courier New&quot;,Courier,monospace;"><br />
+</div><div style="color: black; font-family: &quot;Courier New&quot;,Courier,monospace;">cd test/</div><div style="color: black; font-family: &quot;Courier New&quot;,Courier,monospace;">./TEST parallel</div><div style="color: black;"><br />
+</div><div style="color: black;">Hopefully this returns:</div><div style="color: black;"><br />
+</div><div style="color: black;"><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">#####################################################################</span><br />
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Summary</span><br />
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">#####################################################################</span><br />
+<br />
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">ALL TESTS ENDED PROPERLY!</span><br />
+<br />
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">date and time&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : Sat Oct 29 10:54:20 CEST 2011</span></div><div style="color: black;">If not, something is wrong. :) Now proceed to the full test suite. I use nohup and just check the output in <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">nohup.out</span>.</div><div style="color: black;"></div><div style="color: black;"><br />
+</div><div style="color: black; font-family: &quot;Courier New&quot;,Courier,monospace;">nohup ./TEST all &amp;</div><div style="color: black; font-family: &quot;Courier New&quot;,Courier,monospace;">less nohup.out</div><div style="color: black;"><br />
+</div><div style="color: black;">Hopefully <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">nohup.out</span> end with (after an hour or so):</div><div style="color: black; font-family: &quot;Courier New&quot;,Courier,monospace;"><br />
+</div><div style="color: black; font-family: &quot;Courier New&quot;,Courier,monospace;">All tests completed successfully<br />
+Perl-style tests computed successfully<br />
+<br />
+Perl-style tests finished!<br />
+<br />
+#####################################################################<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Summary<br />
+#####################################################################<br />
+<br />
+ALL TESTS ENDED PROPERLY!<br />
+<br />
+date and time&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : Sat Oct&nbsp; 29 13:02:34 CEST 2011</div><div style="color: black;"><br />
+</div><div style="color: black;">This means DALTON2011 works!</div><div style="color: black;"><br />
+</div><div style="color: black;"><br />
+</div><div style="color: black;">You can also head over to the DIRAC10 wiki pages, which is very much like compiling DALTON: <a href="http://wiki.chem.vu.nl/dirac/index.php/Installation_guide">http://wiki.chem.vu.nl/dirac/index.php/Installation_guide</a><br />
+<br />
+For support go to: <a href="http://dirac.chem.sdu.dk/daltonprogram.org/www/docs.html">http://dirac.chem.sdu.dk/daltonprogram.org/www/docs.html</a> </div><div style="color: black;"><br />
+</div><div style="color: black;">I did this on a Intel Core i5-760 with Ubuntu 10.04.3 Server and Intel Compilers version 12.0.0 20101006. The entire test suite took twice as long compiling with GNU compilers, so I recommend staying away from these for a "production" version. Further more MKL is one of the fastest and most stable BLAS and LAPACK libraries there is and it comes precompiled for 64-bit integers with the Intel Compilers, so do use MKL and save yourself a headache! Also GNU compilers &gt;4.4 have compiler issues from what I've heard.</div><div style="color: black;"><br />
+</div>

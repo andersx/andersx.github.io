@@ -1,0 +1,40 @@
+---
+layout: post
+title: How easy it is to setup an SVN repository! Or how easy backup and version control
+  really is ...
+date: '2012-01-07T15:54:00.005+01:00'
+author: hellogetmyblogback
+tags:
+- svn version control subversion up ci co revert fragbuilder commit update revert
+modified_time: '2012-01-07T18:21:47.330+01:00'
+blogger_id: tag:blogger.com,1999:blog-8160351477288734008.post-122804718876442640
+blogger_orig_url: https://combichem.blogspot.com/2012/01/how-easy-it-is-to-setup-svn-repository.html
+---
+
+<div style="color: black; text-align: justify;">This post serves to spread the use of version control and easy backup in science and everyday life. SVN (an abbreviation of <i>Subversion</i>) is in my opinion the simplest method. Mostly because it is extremely easy to use and setup.</div><div style="color: black;"><div class="separator" style="clear: both; text-align: center;"><a href="http://upload.wikimedia.org/wikipedia/en/7/79/Subversion.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" src="http://upload.wikimedia.org/wikipedia/en/7/79/Subversion.png" /></a></div><br />
+</div><div style="color: black; text-align: justify;">All you need is a server with SSH access and SVN installed  for the most basic way to set up and use SVN.&nbsp;Most research clusters will have this. Our research cluster (cleverly named <i>sunray</i>) already has both, and I will use it to demonstrate how I set up an SVN repository for my latest project, which is an API for building peptide fragments and set up NMR calculations and subsequent data analysis.</div><div style="color: black; text-align: justify;"><br />
+</div><div style="color: black; text-align: justify;">On 90% of newer Linux distributions one of the two following commands should install everything required for SVN. This is needed on both the server and all clients.</div><pre class="brush: bash" style="color: black;">andersx@computer:~# yum install subversion # as root
+andersx@computer:~$ sudo apt-get install subversion
+</pre><div style="color: black; text-align: justify;">Now, let set up the repository on the remote server, from which we can access the repository from. First, create a directory where you want your repository to live. I use a folder called <b><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">~/repositories</span></b> to keep all my repositories in as sub-directories. My project in this example is called <b><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">fragbuilder</span></b>:</div><pre class="brush: bash" style="color: black;">andersx@sunray:~$ mkdir /home/andersx/repositories/fragbuilder
+andersx@sunray:~$ svnadmin create /home/andersx/repositories/fragbuilder
+</pre><div style="color: black; text-align: justify;">The command <b><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">"svnadmin create"</span></b> sets up the repository. This is all you ever need to do on the server. Now you can log out and forget about it.</div><div style="color: black; text-align: justify;"><br />
+Now hop on to the client computer. My laptop <b style="font-family: &quot;Courier New&quot;,Courier,monospace;">"awesome"</b> is used in this example. First, we need to get a copy of the newly created repository. This is called "checking out" and abbreviated <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">"</span><b style="font-family: &quot;Courier New&quot;,Courier,monospace;">co</b><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">"</span>:</div><pre class="brush: bash" style="color: black;">andersx@awesome:~$ svn co svn+ssh://sunray/home/andersx/repositories/fragbuilder
+</pre><div style="color: black;"><br />
+<div style="text-align: justify;">This&nbsp;creates a directory named <b><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">fragbuilder</span></b> which is under control of SVN. In this folder,&nbsp;put all my project files, I must:</div></div><pre class="brush: bash" style="color: black;">andersx@awesome:~$ cd fragbuilder/
+andersx@awesome:~/fragbuilder$ cp -r ../torsome/* . 
+# I.e. just copy your project files into the folder
+</pre><div style="color: black;"><br />
+<div style="text-align: justify;">Whenever new files are added to the folder, put them under version control by SVN by adding them to the repository:</div></div><pre class="brush: bash" style="color: black;">andersx@awesome:~/fragbuilder$ svn add *
+</pre><div style="color: black;"><br />
+<div style="text-align: justify;">When you're done with tinkering with your project files and want to send them back to the server use (this is called <i>"to commit"</i> abbreviated <b style="font-family: &quot;Courier New&quot;,Courier,monospace;">"ci"</b>) use the following command. A good habit is to add a comment, so you can remember what was changed before your last <i>commit</i>. This is done with the <b style="font-family: &quot;Courier New&quot;,Courier,monospace;">-m "comment"</b> option:</div></div><pre class="brush: bash" style="color: black;">andersx@awesome:~/fragbuilder$ svn ci -m "Created SVN repository"
+</pre><div style="color: black; text-align: justify;"><br />
+<div style="text-align: justify;">Next time you want to update your working copy to the latest version from the server, simply <i>update</i> (<b style="font-family: &quot;Courier New&quot;,Courier,monospace;">"up"</b>) in the working directory:</div></div><pre class="brush: bash" style="color: black;">andersx@awesome:~/fragbuilder$ svn up
+</pre><div style="color: black; text-align: justify;"><br />
+<div style="text-align: justify;">In a perfect world, I <i>commit</i> when I leave my work place, so if my laptop gets stolen, I still have a backup, and I can <i>update</i> what I did at work when I get home.</div></div><div style="color: black; text-align: justify;"><br />
+</div><div style="color: black; text-align: justify;">The last useful command &nbsp;I want to show you today is how to update to a previous version. Let's say you want to <i>revert</i> to revision 233 of your project:</div><pre class="brush: bash" style="color: black;">andersx@awesome:~/fragbuilder$ svn update -r 233
+</pre><div style="color: black;"><br />
+<div style="text-align: justify;">This will revert your working directory to how things were under revision 233.</div></div><div style="color: black; text-align: justify;"><br />
+</div><div style="color: black; text-align: justify;">For the most part, all you need to ever type is <b style="font-family: &quot;Courier New&quot;,Courier,monospace;">svn ci -m "comment" </b>or <b style="font-family: &quot;Courier New&quot;,Courier,monospace;">svn up</b>. This is how easy backup and version control is and should be!</div><div style="color: black; text-align: justify;"><br />
+</div><div style="color: black;"><br />
+</div><div style="color: black;"><br />
+</div>

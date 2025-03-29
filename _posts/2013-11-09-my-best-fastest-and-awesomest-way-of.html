@@ -1,0 +1,43 @@
+---
+layout: post
+title: My best, fastest and awesomest way of including matplotlib in Latex
+date: '2013-11-09T15:20:00.004+01:00'
+author: hellogetmyblogback
+tags:
+modified_time: '2013-11-10T12:41:51.617+01:00'
+blogger_id: tag:blogger.com,1999:blog-8160351477288734008.post-5289782246416762058
+blogger_orig_url: https://combichem.blogspot.com/2013/11/my-best-fastest-and-awesomest-way-of.html
+---
+
+If you use this post you will accomplish the following:<br />
+<ol>
+<li>Be able Include loss-less vector graphics in your Latex document (good).</li>
+<li>Be able to select text inside figures with mouse (awesome).</li>
+<li>Compile your latex document with figures faster (probably).</li>
+<li>Make your files smaller and of  higher quality (mostly).</li>
+<li>That's it. The rest is up to you!</li>
+</ol>
+I see many people still using .eps files from matplotlib in their otherwise nicely formatted Latex document.&nbsp; Forget this. From this post on we use matplotlib figures in .pdf format. It works exactly as with .eps or .png or what else you might be using:<br />
+<br />
+<script src="https://gist.github.com/andersx/7385833.js"></script>
+Let's also use pdflatex for compiling (just replace the latex command):<br />
+<br />
+<pre><span style="font-family: inherit;"><span style="font-size: large;">andersx@awesome:~/my_paper$ pdflatex mypaper.tex</span></span>
+</pre>
+<br />
+This will also compile much faster than standard latex (using, say, .png-files), since you are now including something that is already in pdf-format. <br />
+<br />
+Last two steps are (1) to save your file as a .pdf-file and (2) autocrop the white borders (loss-less). Step one is accomplished using standard matplotlib/pylab/etc. syntax. The 2nd part is done using a tool called pdfcrop (which is already included in you have latex installed). I prefer to call pdfcrop from within the Python script to avoid having to run more than one command each time I make a new figure.<br />
+<script src="https://gist.github.com/andersx/7385821.js"></script>
+
+The above is some boilerplate code. The result is:<br />
+<br />
+<pre><span style="font-family: inherit;"><span style="font-size: large;">andersx@awesome:~/my_paper$ python my_figure.py 
+PDFCROP 1.33, 2012/02/01 - Copyright (c) 2002-2012 by Heiko Oberdiek.
+==&gt; 1 page written on `my_file.pdf'.
+andersx@awesome:~/my_paper$</span></span></pre>
+<br />
+Now you have a beautifully formatted pdf-file to include in&nbsp; your latex document.<br />
+<br />
+I might edit this post later with a bit of bling and YOLO/swag just to give it the attractive combination of vitality and glamour it deserves.<br />
+<br />

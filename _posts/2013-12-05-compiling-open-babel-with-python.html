@@ -1,0 +1,30 @@
+---
+layout: post
+title: Compiling Open Babel with Python bindings
+date: '2013-12-05T15:50:00.001+01:00'
+author: hellogetmyblogback
+tags:
+modified_time: '2013-12-06T10:12:58.790+01:00'
+blogger_id: tag:blogger.com,1999:blog-8160351477288734008.post-3237309238512978976
+blogger_orig_url: https://combichem.blogspot.com/2013/12/compiling-open-babel-with-python.html
+---
+
+<b>Use the commands below to compile Open Babel with python bindings:&nbsp;</b><br />
+<br />
+git clone git://github.com/openbabel/openbabel.git<br />
+cd openbabel<br />
+mkdir build<br />
+cd build<br />
+cmake -DRUN_SWIG=ON -DPYTHON_BINDINGS=ON \<br />
+-DCMAKE_INSTALL_PREFIX=/opt/openbabel&nbsp; -DENABLE_TESTS=ON ..<br />
+make<br />
+make test <br />
+sudo make install<br />
+<br />
+<b>Export these variables to use your newly compiled Open Babel:</b><br />
+<br />
+export PYTHONPATH=/opt/openbabel/lib/python2.7/site-packages:\$PYTHONPATH
+<br />
+export LD_LIBRARY_PATH=/opt/openbabel/lib:\$LD_LIBRARY_PATH
+<br />
+export PATH=/opt/openbabel/bin:\$PATH

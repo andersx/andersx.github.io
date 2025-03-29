@@ -1,0 +1,82 @@
+---
+layout: post
+title: Fun with Numba, NumPy and F2PY
+date: '2013-04-27T14:39:00.000+02:00'
+author: hellogetmyblogback
+tags:
+modified_time: '2013-04-27T14:43:21.687+02:00'
+blogger_id: tag:blogger.com,1999:blog-8160351477288734008.post-2963814980715068988
+blogger_orig_url: https://combichem.blogspot.com/2013/04/fun-with-numba-numpy-and-f2py.html
+---
+
+<div style="text-align: justify;">
+I've started using Numba to speed up MD simulations for our course in Molecular Statistics, which I teach together with <a class="g-profile" href="http://plus.google.com/113593600676820394169" target="_blank">+Jan Jensen</a> and <a class="g-profile" href="http://plus.google.com/111529974982597129664" target="_blank">+Jimmy Charnley Kromann</a>.</div>
+<div style="text-align: justify;">
+</div>
+<div style="text-align: justify;">
+<br /></div>
+<div style="text-align: justify;">
+<span id="goog_507366928">One exercise is using the Velo-Verlet algorithm to simulate a Lennard-Jones gas/liquid with periodic boundary conditions. Since we do everything in Python in this course, running the actual simulation is quite slow. What we do is we supply the students with a compiled FORTRAN module, compiled with F2PY which they can use when they've written their own Lennard-Jones gradient code.</span></div>
+<div style="text-align: justify;">
+<br /></div>
+<div style="text-align: justify;">
+<span id="goog_507366928">The FORmula TRANslator module is extremely fast, compared to Python code. I rewrote the code from last year's course to a function I could use with Numba and compare directly to the F2PY module</span></div>
+<div style="text-align: justify;">
+<span id="goog_507366928"><br /></span></div>
+<div style="text-align: justify;">
+<span id="goog_507366928">For 100 particles:</span></div>
+<br />
+<ul>
+<li><b>Numba: </b>0.146 ms/iteration (466x speed up)</li>
+<li><b>F2PY: </b>0.236 ms/iteration (289x speed up)</li>
+<li><b>Python:</b> 68.06 ms/iteration</li>
+</ul>
+Now, I'm pretty sure a pure FORTRAN implementation would be faster than the F2PY, but I am very impressed with the Numba, since it's standard Python code and MUCH more simple to read than FORTRAN -- in theory all you have to do is write<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&nbsp;@autojit</span> before a function definition. This is of course in theory ... I didn't do anything to improve on the readability of the Lennard-Jones code here. Before I posted, I had actually inserted a comment saying<span style="font-family: &quot;Courier New&quot;,Courier,monospace;"> """This code block is unreadable"""</span>.<br />
+<br />
+Now, there were a few issues I discovered:<br />
+<br />
+<br />
+<b>1)<span style="font-family: &quot;Courier New&quot;,Courier,monospace;"> @autojit vs. </span><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">@jit(argtypes=[double[:,:], double[:]])</span></b><br />
+<br />
+Since Numba has to decide what arguments a function takes before it's being compiled, it needs to know what possible type of arguments the function takes. If you're lucky, Numba decides on the right type and you can get away with <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">@autojit</span>, but sometimes autojitting makes the code SLOWER than standard, interpreted Python. In one case I got a factor of 10x slower with autojit, but explicitly stating the function argument types with <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">@jit(argtypes = .... )</span> I got a speed up of 20x on the same code compared to interpreted Python.<br />
+<br />
+<br />
+<b>2) Returning tuples in compiled code block</b><br />
+<br />
+Numba does not allow a tuple to be returned inside a compiled code block. So don't do this.<br />
+<br />
+<br />
+<b>3) Use Numpy properly</b><br />
+<br />
+<ul>
+<li>Numba is NumPy aware, so code ran faster when numbers were stored in <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">numpy.array</span> types rather than just regular Python lists.</li>
+<li>At first I was <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">numpy.round()</span> to round to nearest integer in the periodic boundary condition code. Switching three <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">numpy.round()</span> calls to<span style="font-family: &quot;Courier New&quot;,Courier,monospace;"> numpy.rint()</span> gave a speed up of around 100x on the code execution.</li>
+<li>Use <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">U[i, j]</span> instead of <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">U[i][j]</span> on NumPy arrays. Not much of a difference in the vanilla Python code, but MASSIVE speed gains in compiled code.</li>
+</ul>
+<br />
+<br />
+Python Lennard-Jones code:<br />
+<br />
+<script src="https://gist.github.com/andersx/5472867.js"></script>
+
+<br />
+F2PY Lennard-Jones code:<br />
+<br />
+<script src="https://gist.github.com/andersx/5472862.js"></script>
+
+<br />
+Python Velo-Verlet solver:<br />
+<br />
+<script src="https://gist.github.com/andersx/5472874.js"></script>
+
+<br />
+<br />
+<br />
+<br />
+<br />
+<div class="separator" style="clear: both; text-align: center;">
+<a href="http://spinnakr.com/blog/wp-content/uploads/2013/03/Aint-Nobody-Got-Time.jpg" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" height="320" src="http://spinnakr.com/blog/wp-content/uploads/2013/03/Aint-Nobody-Got-Time.jpg" width="320" /></a></div>
+<br />
+<br />
+<br />
+<br />

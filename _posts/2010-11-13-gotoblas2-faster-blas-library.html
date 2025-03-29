@@ -1,0 +1,22 @@
+---
+layout: post
+title: 'GotoBLAS2: A faster BLAS library'
+date: '2010-11-13T13:54:00.007+01:00'
+author: hellogetmyblogback
+tags:
+- BLAS
+- installing
+- Gotoblas2
+- compiling
+modified_time: '2010-11-13T22:07:15.598+01:00'
+blogger_id: tag:blogger.com,1999:blog-8160351477288734008.post-8215747758042337184
+blogger_orig_url: https://combichem.blogspot.com/2010/11/gotoblas2-faster-blas-library.html
+---
+
+<div style="text-align: justify;">This post is about a little trick I have for speeding up my quantum chemistry calculations. For some reason this software is unknown to most people, and thus I decided do a short advertisement!</div><div style="text-align: justify;"><br />
+</div><div style="text-align: justify;">The bottleneck in all forms of computational quantum chemistry is the CPU time spent to converge a calculation to a given accuracy. The most expensive part is in most cases the evaluation of two-electron integrals,&nbsp; but during many calculations, a lot of time is also spent doing linear algebra operations. The computational routines for doing linear algebra has been optimized greatly over the years and today there are quite a few standard linear algebra libraries for doing this. One standard API of linear algebra routines is called <a href="http://en.wikipedia.org/wiki/Basic_Linear_Algebra_Subprograms">BLAS</a>, short for "Basic Linear Algebra Subprograms". Many equations involved in quantum chemistry are formulated into <a href="http://www.cobalt.chem.ucalgary.ca/ziegler/educmat/chm386/rudiment/quanmath/matrix.htm">matrix notation</a> which is easily interpreted and turned into fast, parallelized code.</div><div style="text-align: justify;"><br />
+</div><div class="separator" style="clear: both; text-align: center;"><a href="http://www.enotes.com/w/images/thumb/e/eb/Matrix_multiplication_diagram_2.svg/313px-Matrix_multiplication_diagram_2.svg.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" src="http://www.enotes.com/w/images/thumb/e/eb/Matrix_multiplication_diagram_2.svg/313px-Matrix_multiplication_diagram_2.svg.png" /></a></div><div style="text-align: justify;">When people want to use a fast BLAS library, often well-known libraries such as the ALTAS or Intel MKL BLAS libraries are used. However, there is a slightly faster BLAS library out there, named GotoBLAS2. This library was started by a Japanese guy named Kazushige Goto (the Japanese pronunciation is something lik "go-toe"), who, like Albert Einstein, worked in a patent office while he began developing his own BLAS library. After a while he was 'discovered' by a university in Texas and soon Goto was deported from Japan. Now he is said to be very rich and working for some large <a href="http://en.wikipedia.org/wiki/Corporation_%28rpg%29">coporation</a> somewhere in the US.</div><div style="text-align: justify;"><br />
+</div><div style="text-align: justify;">Enough with the history! Tobias Wittwer has made a detailed comparison of common, fast BLAS libraries in this pdf: <a href="http://www.google.com/url?sa=t&amp;source=web&amp;cd=5&amp;sqi=2&amp;ved=0CDQQFjAE&amp;url=http%3A%2F%2Fwww.tudelft.nl%2Flive%2FServeBinary%3Fid%3D608b3015-5195-438a-90fc-c30c2252a066%26binary%3D%2Fdoc%2Fblas_lapack.pdf&amp;rct=j&amp;q=gotoblas%20mkl%20atlas%20comparison&amp;ei=0YLeTKidJIabOuDQkJ0P&amp;usg=AFQjCNFX2E0OBb7CNcDJJ2zmcA6Mm15-6Q&amp;cad=rja">blas_lapack.pdf</a></div><div style="text-align: justify;"><br />
+</div><div style="text-align: justify;"><br />
+</div><div style="text-align: justify;">You can download the latest GotoBLAS2 <a href="http://www.tacc.utexas.edu/tacc-projects/gotoblas2/">here</a>. Not only is GotoBLAS2 faster&nbsp; than Intel's MKL library, GotoBLAS2 is also completely free of charge and open source under the <a href="http://en.wikipedia.org/wiki/BSD_licenses">BSD license</a>.</div><div style="text-align: justify;"><br />
+</div><div style="text-align: justify;">GotoBLAS2 will be used in future posts on compiling and installing software, for which I am always using GotoBLAS2. So be sure to use this and make the most of your CPU resources!</div>

@@ -1,0 +1,119 @@
+---
+layout: post
+title: C++ timing with millisecond accuracy
+date: '2011-10-21T09:28:00.001+02:00'
+author: hellogetmyblogback
+tags:
+- boost timer runtime millisecond gettimeofday
+modified_time: '2011-10-21T09:34:20.061+02:00'
+blogger_id: tag:blogger.com,1999:blog-8160351477288734008.post-5704697457634763048
+blogger_orig_url: https://combichem.blogspot.com/2011/10/cccuda-timing-with-millisecond-accuracy.html
+---
+
+How do you know if you have efficiently implemented a routine. A simple routine from <a href="http://en.wikipedia.org/wiki/Boost_C%2B%2B_Libraries">Boost</a> can tell you. More specifically the boost::timer function.<br />
+Boost is a set of <a href="http://en.wikipedia.org/wiki/Free_software" title="Free software">free software</a> <a class="mw-redirect" href="http://en.wikipedia.org/wiki/Library_%28computer_science%29" title="Library (computer science)">libraries</a> that extend the functionality of <a href="http://en.wikipedia.org/wiki/C%2B%2B" title="C++">C++</a>, in the Wikipedia discription. There are tons of very useful features you'd expect to be native to an advanced programming language as C++ but are not.<br />
+<br />
+How to get boost? Usually on Linux you can just say something like <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">apt-get install libboost</span> or <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">yum install libboost</span>. Let me know if you want a tutorial to compile or install boost. The examples below compile with both Intel and Gnu C++ compilers and even Nvidia compilers (I tried NVCC 4.0).<br />
+<br />
+Here is a code example of how to time a routine with boost:<br />
+<br />
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;"></span><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">#include &lt;boost/timer.hpp&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // For boost::timer class</span><br />
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">#include &lt;iostream&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // For printing</span><br />
+<br />
+<br />
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">// Some constants</span><br />
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">unsigned int x = 20000;</span><br />
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">bool flag = true;</span><br />
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">unsigned int k = 0;</span><br />
+<br />
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">int main() {</span><br />
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Start boost timer.</span><br />
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; boost::timer t;</span><br />
+<br />
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;"></span><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Do a double loop that takes some time.</span><br />
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; for (unsigned int i = 0; i &lt; x; i++) {</span><br />
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; for (unsigned int j = 0; j &lt; x; j++) {</span><br />
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; k = i + j;</span><br />
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (k % 2 == 0) {</span><br />
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; flag = false;</span><br />
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } else {</span><br />
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; flag = true;</span><br />
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</span><br />
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</span><br />
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</span><br />
+<br />
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Store elapsed time from boost</span><br />
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; double elapsed = t.elapsed();</span><br />
+<br />
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;"></span><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Print elapsed time from the t object.</span><br />
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; std::cout &lt;&lt; "boost/timer says:" &lt;&lt; std::endl;</span><br />
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; std::cout &lt;&lt; "Total time&nbsp;&nbsp;&nbsp; = " &lt;&lt; elapsed&nbsp;</span><br />
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&lt;&lt; " seconds" &lt;&lt; std::endl;</span><br />
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; std::cout &lt;&lt; "Avg time/iter = " &lt;&lt; elapsed / (x * x)&nbsp;</span><br />
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&lt;&lt; " seconds" &lt;&lt; std::endl;</span><br />
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;"></span><br />
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return 0;</span><br />
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">}</span><br />
+<br />
+I get the following output <span style="font-family: inherit;">on my Core</span> i5-760 box and the icpc compiler:<br />
+<br />
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">boost/timer says:</span><br />
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">Total time&nbsp;&nbsp;&nbsp; = 0.35 seconds</span><br />
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">Avg time/iter = 8.75e-10 seconds</span><br />
+<br />
+<br />
+You can use <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">t.reset()</span> if you want to reset the timer in your program. <br />
+<br />
+<br />
+If you want higher accuraccy, you can use the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">gettimeofday()</span> function from <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">sys/time.h</span>. This example does not require boost either, but the code is way uglier. This is done very much like in the above code:<br />
+<br />
+<div style="font-family: &quot;Courier New&quot;,Courier,monospace;">#include &lt;sys/time.h&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // For gettimeofday()<br />
+#include &lt;iostream&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // For printing<br />
+<br />
+<br />
+// Some constants<br />
+unsigned int x = 20000;<br />
+bool flag = true;<br />
+unsigned int k = 0;<br />
+<br />
+int main() {<br />
+</div><div style="font-family: &quot;Courier New&quot;,Courier,monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Create objects for gettimeofday() timing<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; struct timeval start_time;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; struct timeval end_time;<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Get the time of day -- NULL means we don't care about<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // time zones. Store in start_time.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; gettimeofday(&amp;start_time, NULL);<br />
+<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Do a double loop that takes some time.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; for (unsigned int i = 0; i &lt; x; i++) {<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; for (unsigned int j = 0; j &lt; x; j++) {<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; k = i + j;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (k % 2 == 0) {<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; flag = false;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } else {<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; flag = true;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //Store time of day in end time<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; gettimeofday(&amp;end_time, NULL);<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Calculate the elapsed time with micro second accuracy from gettime of day<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; double start = start_time.tv_sec*1000000 + (start_time.tv_usec);<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; double end&nbsp;&nbsp; = end_time.tv_sec*1000000 + (end_time.tv_usec);<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; elapsed&nbsp;&nbsp;&nbsp;&nbsp; = end - start;<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Print elapsed time from gettimeofday().<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; std::cout &lt;&lt; "gettimeofday says:" &lt;&lt; std::endl;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; std::cout &lt;&lt; "Total time&nbsp;&nbsp;&nbsp; = " &lt;&lt; elapsed&nbsp;</div><div style="font-family: &quot;Courier New&quot;,Courier,monospace;"><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>&lt;&lt; " microseconds" &lt;&lt; std::endl;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; std::cout &lt;&lt; "Avg time/iter = " &lt;&lt; elapsed / (x * x)&nbsp;</div><div style="font-family: &quot;Courier New&quot;,Courier,monospace;"><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>&lt;&lt; " microseconds" &lt;&lt; std::endl;<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return 0;<br />
+}</div><div style="font-family: Verdana,sans-serif;"><br />
+</div><div style="font-family: Verdana,sans-serif;">This gives me the following output:</div><div style="font-family: Verdana,sans-serif;"><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">gettimeofday says:</span><br />
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">Total time&nbsp;&nbsp;&nbsp; = 366208 microseconds</span><br />
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">Avg time/iter = 0.00091552 microseconds</span></div><div style="font-family: &quot;Courier New&quot;,Courier,monospace;"><br />
+<span style="font-family: Verdana,sans-serif;">Happy coding! Let me know if you have questions or comments.</span></div><div style="font-family: &quot;Courier New&quot;,Courier,monospace;"></div>

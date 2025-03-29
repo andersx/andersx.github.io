@@ -1,0 +1,50 @@
+---
+layout: post
+title: Numba -- It's like Python on steroids ... on steroids.
+date: '2013-04-22T17:23:00.000+02:00'
+author: hellogetmyblogback
+tags:
+modified_time: '2013-04-22T17:24:26.206+02:00'
+blogger_id: tag:blogger.com,1999:blog-8160351477288734008.post-127044513647356719
+blogger_orig_url: https://combichem.blogspot.com/2013/04/numba-its-like-python-on-steroids-on.html
+---
+
+<div style="text-align: justify;">
+I'm teaching a course in molecular simulations this year in which the students have to program simulations of various simple systems. We're trying to keep things as simple as possible and everything is done in Python.</div>
+<div style="text-align: justify;">
+<br /></div>
+<div style="text-align: justify;">
+The task of the second week of the course is to program a simple simulation of a 2D Lennard-Jones gas. The computationally intensive step in this exercise is calculating the energy and gradient. In the past we've (and by we, I mean <a class="g-profile" href="http://plus.google.com/103736230785278907829" target="_blank">+Casper Steinmann</a>) written a FORTRAN module and used F2PY to exploit the awesomeness of the good old FORmula TRANslator and have the students link their Python scripts with a precompiled .so module for this to run at an acceptable speed</div>
+<div style="text-align: justify;">
+<br /></div>
+<div style="text-align: justify;">
+This solution is of course completely fine, but not very general. I've been looking into Cython, pypy and various other methods to speed things up a bit. But they all seemed quite elaborate an unPythonic, and you might as well do the whole thing in C then.</div>
+<div style="text-align: justify;">
+<br /></div>
+<div style="text-align: justify;">
+Yesterday Numba was brought to my attention on <a href="http://jakevdp.github.io/blog/2012/08/24/numba-vs-cython/">this blog</a>. In short, Numba is a way to compile (at execution time) Python functions into C which normally makes your program run substantially faster. The blog has a very nice example where the code gets a 1000x speedup just by adding one function decorator. And the syntax couldn't be simpler.</div>
+<div style="text-align: justify;">
+<br /></div>
+<div style="text-align: justify;">
+Let's try Numba on our Lennard-Jones program. Here is the naive function they have to implement:</div>
+<div style="text-align: justify;">
+<br /></div>
+<div style="text-align: justify;">
+<script src="https://gist.github.com/andersx/5435455.js"></script>The code is then executed via Python as one would normally execute Python code, specifying in the script that the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">calc_energy_and_gradient()</span> function is to be compiled via Numba. This can be done simply by writing the the<span style="font-family: &quot;Courier New&quot;,Courier,monospace;"> @autojit</span> decorator before the function definition.&nbsp;</div>
+<div style="text-align: justify;">
+<br /></div>
+<div style="text-align: justify;">
+You can also specify exactly which type of input the <i>just-in-time</i> compilation takes takes (an example is commented out). This makes the compilation of the function be type specific, but a bit faster.&nbsp; Make sure to <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">import numba</span> and the specific type of argument (here the arguments are of the type <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">double</span>) and the relevant decorators (<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">jit</span> or <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">autojit</span>).</div>
+<div style="text-align: justify;">
+<br /></div>
+<div style="text-align: justify;">
+<script src="https://gist.github.com/andersx/5435486.js"></script><b>Conclusion: </b>10000 gradient and energy evaluations take 16 seconds with the standard Python implementation. 2 seconds with <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">@autojit</span> and 1.5 seconds with the explicit <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">@jit</span>. Not too bad for something that doesn't take ANY code changes.<br />
+<br />
+<div class="separator" style="clear: both; text-align: center;">
+<a href="http://cdn.memegenerator.net/instances/400x/28705638.jpg" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" height="320" src="http://cdn.memegenerator.net/instances/400x/28705638.jpg" width="320" /></a></div>
+</div>
+<div style="text-align: justify;">
+<br /></div>
+<div style="text-align: justify;">
+<br /></div>
+<br />

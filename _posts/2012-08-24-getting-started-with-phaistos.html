@@ -1,0 +1,51 @@
+---
+layout: post
+title: Getting started with Phaistos // installation
+date: '2012-08-24T15:20:00.000+02:00'
+author: hellogetmyblogback
+tags:
+modified_time: '2012-11-17T10:05:52.425+01:00'
+blogger_id: tag:blogger.com,1999:blog-8160351477288734008.post-6216081371415176210
+blogger_orig_url: https://combichem.blogspot.com/2012/08/getting-started-with-phaistos.html
+---
+
+<div style="text-align: justify;">
+I got an e-mail from a student named Alex at Boston University, asking if I could help him getting started with <a href="http://www.phaistos.org/">Phaistos</a>. First barrier for new users (in this case a student), is to download and install Phaistos on a Linux machine.</div>
+<div style="text-align: justify;">
+<br /></div>
+<div style="text-align: justify;">
+First, you have to download the latest and greatest revision of Phaistos from <a href="http://sourceforge.net/projects/phaistos/">sourceforge</a>. This is done via the following command:</div>
+<pre class="brush: shell">svn checkout https://phaistos.svn.sourceforge.net/svnroot/phaistos/trunk phaistos</pre>
+<div style="text-align: justify;">
+This creates a directory named "<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">phaistos</span>" and downloads the source code to taht directory. Now enter the "<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">phaistos</span>" directory, create a directory named "<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">build</span>" and then cd into that dir:</div>
+<pre class="brush: shell">cd phaistos
+mkdir build
+cd build
+cmake ..</pre>
+<div style="text-align: justify;">
+cmake prepares the compilation step and finds out where your libraries etc. are located. Note that Phaistos requires <a href="http://www.boost.org/">Boost</a> installed, version 1.41 or newer.</div>
+<div style="text-align: justify;">
+<br /></div>
+<div style="text-align: justify;">
+If you have Boost installed in a non-standard location and cmake doesn't find the Boost libraries, things are slightly more complicated. On my laptop (running CentOS 6.3), I cannot get cmake to consistently find my Boost via the "<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">-DBOOST_ROOT</span>" option as mentioned in the Phaistos manual. Usually using these cmake command flags should work. Note that in the example, I have boost installed in "<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">/opt/boost_1_41_0</span>".<br />
+<br />
+<pre class="brush: shell">cmake -DBoost_DIR=/opt/boost_1_41_0 -DBoost_INCLUDE_DIR=/opt/boost_1_41_0/include</pre>
+<br />
+In this case, I explicitly tell cmake where all Boost libraries are located via these two lines (the second line is "a bit" long, make sure you get everything when you copy/paste!):</div>
+<pre class="brush: shell">export BOOST_ROOT_DIR=/opt/boost_1_41_0 #(i.e. where Boost is installed)
+cmake -DBoost_INCLUDE_DIR=$BOOST_ROOT_DIR/include -DBoost_LIBRARY_DIRS=$BOOST_ROOT_DIR/lib -DBoost_PROGRAM_OPTIONS_LIBRARY=$BOOST_ROOT_DIR/lib/libboost_program_options.a -DBoost_SERIALIZATION_LIBRARY=$BOOST_ROOT_DIR/lib/libboost_serialization.a -DBoost_THREAD_LIBRARY=$BOOST_ROOT_DIR/lib/libboost_thread.a -DBoost_INCLUDE_DIR_DEBUG=/home/kasper/boost_build/include -DBoost_LIBRARY_DIRS_DEBUG=$BOOST_ROOT_DIR/lib -DBoost_PROGRAM_OPTIONS_LIBRARY_DEBUG=$BOOST_ROOT_DIR/lib/libboost_program_options.a -DBoost_SERIALIZATION_LIBRARY_DEBUG=$BOOST_ROOT_DIR/lib/libboost_serialization.a -DBoost_THREAD_LIBRARY_DEBUG=$BOOST_ROOT_DIR/lib/libboost_thread.a -DBoost_INCLUDE_DIR_RELEASE=/home/kasper/boost_build/include -DBoost_LIBRARY_DIRS_RELEASE=$BOOST_ROOT_DIR/lib -DBoost_PROGRAM_OPTIONS_LIBRARY_RELEASE=$BOOST_ROOT_DIR/lib/libboost_program_options.a -DBoost_SERIALIZATION_LIBRARY_RELEASE=$BOOST_ROOT_DIR/lib/libboost_serialization.a -DBoost_THREAD_LIBRARY_RELEASE=$BOOST_ROOT_DIR/lib/libboost_thread.a -DBoost_THREAD_LIBRARY=$BOOST_ROOT_DIR/lib/libboost_thread.a -DBoost_REGEX_LIBRARY=$BOOST_ROOT_DIR/lib/libboost_regex.a -DBoost_THREAD_LIBRARY_DEBUG=$BOOST_ROOT_DIR/lib/libboost_thread.a -DBoost_REGEX_LIBRARY_DEBUG=$BOOST_ROOT_DIR/lib/libboost_regex.a -DBoost_THREAD_LIBRARY_RELEASE=$BOOST_ROOT_DIR/lib/libboost_thread.a -DBoost_REGEX_LIBRARY_RELEASE=$BOOST_ROOT_DIR/lib/libboost_regex.a -DBoost_UNIT_TEST_FRAMEWORK_LIBRARY=$BOOST_ROOT_DIR/lib/libboost_unit_test_framework.a -DBoost_UNIT_TEST_FRAMEWORK_LIBRARY_DEBUG=$BOOST_ROOT_DIR/lib/libboost_unit_test_framework.a -DBoost_UNIT_TEST_FRAMEWORK_LIBRARY_RELEASE=$BOOST_ROOT_DIR/lib/libboost_unit_test_framework.a -DBoost_FILESYSTEM_LIBRARY=$BOOST_ROOT_DIR/lib/libboost_filesystem.a -DBoost_FILESYSTEM_LIBRARY_DEBUG=$BOOST_ROOT_DIR/lib/libboost_filesystem.a -DBoost_FILESYSTEM_LIBRARY_RELEASE=$BOOST_ROOT_DIR/lib/libboost_filesystem.a -DBoost_SYSTEM_LIBRARY=$BOOST_ROOT_DIR/lib/libboost_system.a -DBoost_SYSTEM_LIBRARY_DEBUG=$BOOST_ROOT_DIR/lib/libboost_system.a -DBoost_SYSTEM_LIBRARY_RELEASE=$BOOST_ROOT_DIR/lib/libboost_system.a ..
+</pre>
+Now you are ready to compile:<br />
+<pre class="brush: shell">make -j4&nbsp; </pre>
+After a while you'll get a message saying:<br />
+<pre class="brush: shell">Linking CXX executable ../../../bin/phaistos
+[100%] Built target phaistos</pre>
+From the build directory, you can test if Phaistos is working by typing<br />
+<pre class="brush: shell">bin/phaistos --help</pre>
+(A very long list of options should appear).<br />
+<br />
+To compile the manual, cd into the "<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">phaistos/build</span>" dir ands<br />
+<pre class="brush: shell">make manual_pdf</pre>
+This compiles the manual and puts it in the "<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">phaistos/build/doc</span>" dir. You can also download the latest manual from sourceforge <a href="http://sourceforge.net/projects/phaistos/files/Phaistos/">here</a>.<br />
+<br />
+Do post a comment below, if you have questions or additional comments!

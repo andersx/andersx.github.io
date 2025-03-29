@@ -1,0 +1,41 @@
+---
+layout: post
+title: Numpy vs. cPickles (Python, ofc)
+date: '2013-08-16T10:52:00.003+02:00'
+author: hellogetmyblogback
+tags:
+modified_time: '2013-08-16T10:53:31.248+02:00'
+blogger_id: tag:blogger.com,1999:blog-8160351477288734008.post-7212629680849730199
+blogger_orig_url: https://combichem.blogspot.com/2013/08/numpy-vs-cpickles-python-ofc.html
+---
+
+I've been using<b><span style="font-family: &quot;Courier New&quot;,Courier,monospace;"> cPickels</span></b> for storing data into a Python-friendly format for some time. See my earlier blog post for more on <b><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">cPickles</span></b>.<br />
+<a href="http://combichem.blogspot.dk/2013/02/saving-into-data-into-cpickle-format-in.html">http://combichem.blogspot.dk/2013/02/saving-into-data-into-cpickle-format-in.html</a><br />
+<br />
+I have also been using Numpy's save function to do the same thing. numpy.save() and <span style="font-family: &quot;Courier New&quot;,Courier,monospace;"><b>numpy.load()</b></span> is so much simpler, however. I really recommend that people use <span style="font-family: &quot;Courier New&quot;,Courier,monospace;"><b>numpy.save()</b></span> and <span style="font-family: &quot;Courier New&quot;,Courier,monospace;"><b>numpy.load()</b></span> over <span style="font-family: &quot;Courier New&quot;,Courier,monospace;"><b>cPickles</b></span> for most purposes. It is <i>so</i> much more simple.<br />
+<br />
+I always thought a <span style="font-family: &quot;Courier New&quot;,Courier,monospace;"><b>cPickle</b></span> was much, much faster than Numpy, but I guess I was wrong, according to this stackoverflow I just saw. Below are loading and saving times for a large array. Practically no difference between Numpy and cPickles!<br />
+<br />
+<div class="separator" style="clear: both; text-align: center;">
+<a href="http://i.stack.imgur.com/gEWnv.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" src="http://i.stack.imgur.com/gEWnv.png" /></a></div>
+<span style="font-size: x-small;">Source: <a href="http://stackoverflow.com/questions/16833124/pickle-faster-than-cpickle-with-numeric-data">http://stackoverflow.com/questions/16833124/pickle-faster-than-cpickle-with-numeric-data</a></span><br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+To save an array, a list or dictionary or whatever called <span style="font-family: &quot;Courier New&quot;,Courier,monospace;"><b>my_array</b></span> into <b><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">my_file.npy</span></b>:<br />
+<br />
+<b><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&nbsp; numpy.save("my_file", my_array)</span></b><br />
+<br />
+Note that Numpy appends .npy to the filename automatically.<br />
+<br />
+<br />
+To load the stored data simply:<br />
+<br />
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;"><b>&nbsp; my_array = numpy.load("my_file.npy")</b></span><br />
+<br />
+&nbsp;Really py-fragging-thonicly easy!

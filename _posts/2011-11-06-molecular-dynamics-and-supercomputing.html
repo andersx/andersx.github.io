@@ -1,0 +1,27 @@
+---
+layout: post
+title: Molecular dynamics and supercomputing, past and present
+date: '2011-11-06T16:20:00.002+01:00'
+author: hellogetmyblogback
+tags:
+- nvidia gpu cpu flops gflops tflops plops supercomputing molecular dynamics tesla
+  top500
+modified_time: '2011-11-06T16:21:36.309+01:00'
+blogger_id: tag:blogger.com,1999:blog-8160351477288734008.post-3689586499390686158
+blogger_orig_url: https://combichem.blogspot.com/2011/11/molecular-dynamics-and-supercomputing.html
+---
+
+<div style="text-align: justify;">What is the most powerful single computer you can get today, measured in sheer numbers of double precision <a href="http://en.wikipedia.org/wiki/FLOPS">floating point operations per second</a> (flops)? Possibly, the answer is a rack server (such as the HP half-width 4U in the picture below) with no less than eight(!) <a href="http://www.nvidia.com/object/preconfigured-clusters.html">Nvidia Tesla M2090</a> cards installed. Each card offers a theoretical max of 665 Gflops of double precision computing power -- a total of 5.3 Tflops (not counting any CPUs). Now, go to the <a href="http://www.top500.org/">Top500</a> and find the list from 10 years ago ... <a href="http://www.top500.org/list/2001/11/100">November 2001</a>. Just one of these servers would bring you a safe 3rd place on the list - very impressive for just ONE single machine.</div><div style="text-align: justify;"><br />
+</div><table cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: 0px; margin-right: 0px; text-align: left;"><tbody>
+<tr><td style="text-align: center;"><a href="http://www.fareastgizmos.com/entry_images/1105/18/Hp-SL390_G7_4U_server-thumb-450x337.jpg" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="476" src="http://www.fareastgizmos.com/entry_images/1105/18/Hp-SL390_G7_4U_server-thumb-450x337.jpg" width="640" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">Foto</td></tr>
+</tbody></table><div style="text-align: justify;"><br />
+</div><div style="text-align: justify;">One might argue, that a 4U rack unit is not a very practical computer - so what's the max you can cram into a a standard sized <a href="http://en.wikipedia.org/wiki/ATX">ATX</a> chassis these days? Well, take four of these GPUs (and a good power supply), and you're up to about 2.7 Tflops, theoretical peak. 10 years ago that would bring well into top10 world wide with a box that you could put under your desk! </div><div style="text-align: justify;"><br />
+</div><div style="text-align: justify;">The Japanese "K Computer" is currently the fastest cluster out there and recently <a href="http://www.top500.org/lists/2011/06/press-release">broke the 10 Pflops barrier</a> (10¹⁶ flops)! Now, he question is, when can I expect to have that kind of performance in a desktop PC, and how about my huge ms protein <a href="http://en.wikipedia.org/wiki/Molecular_dynamics">molecular dynamics</a> simulation?</div><div style="text-align: justify;"><br />
+</div><div style="text-align: justify;">Speculating on the future is difficult, so I'm just going to "re-blog" this review paper I stumbled upon by <a href="http://www-vendruscolo.ch.cam.ac.uk/vendruscolo11cb.pdf">Michele Vendruscolo and Christopher M. Dobson, "Protein Dynamics: Moore’s Law in Molecular Biology", <i>Current Biology,</i> <b>21</b>, R68-R70 (2011)</a>, which speculates on the future of MD simulations. According to the authors, MD computing power sees exponential growth, so hopefully, I can one day have a 10 Pflops (I'm willing to settle for less) box under my desk. Here are some of the bold predictions from the paper:</div><div style="text-align: justify;"><br />
+</div><div style="text-align: justify;"><br />
+</div><ul style="text-align: justify;"><li>In 2010 we saw the first nanosecond scale MD simulation of the Ribosome</li>
+</ul><ul style="text-align: justify;"><li>In 2030 we'll be moving up to millisecond&nbsp; scale MD simulation of the Ribosome</li>
+<li>in 2050 we'll be doing all-atom dynamics of entire bacteria on a nanosecond scale.</li>
+</ul><div style="text-align: justify;"><br />
+</div><div style="text-align: justify;">I can't wait to get older and see an all-atom bacteria simulation!</div><div class="separator" style="clear: both; text-align: center;"></div><div class="separator" style="clear: both; text-align: center;"></div><div class="separator" style="clear: both; text-align: center;"></div>

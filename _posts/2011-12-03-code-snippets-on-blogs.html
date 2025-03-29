@@ -1,0 +1,37 @@
+---
+layout: post
+title: Code snippets on blogs
+date: '2011-12-03T09:34:00.037+01:00'
+author: hellogetmyblogback
+tags:
+- code snippets blog blogger python fortran c cpp cplusplus c++ syntax highlighter
+  craftyfella pre
+modified_time: '2011-12-03T13:12:22.608+01:00'
+blogger_id: tag:blogger.com,1999:blog-8160351477288734008.post-2276984618736767472
+blogger_orig_url: https://combichem.blogspot.com/2011/12/code-snippets-on-blogs.html
+---
+
+<div class="container"><div style="color: black;">I had a brief discussion with <a href="http://pythonchem.blogspot.com/">Casper Steinmann</a> about how to present <a href="http://en.wikipedia.org/wiki/Snippet_%28programming%29">code snippets</a> in blog-posts. We both agreed that nice formatting is really important. We also agreed that our previous attempts to do so were (and still are) crummy.</div><div style="color: black;"><br />
+</div><div style="color: black;">One of the (easy) ways to set up nice formatting can be found over at CraftyFella:</div><div style="color: black;"><br />
+</div><div style="color: black;"></div><div style="color: black;"><a href="http://www.craftyfella.com/2010/01/syntax-highlighting-with-blogger-engine.html">http://www.craftyfella.com/2010/01/syntax-highlighting-with-blogger-engine.html</a></div><div style="color: black;"><br />
+</div><div style="color: black;">Just put some stuff in your blogger template and all you have to do is wrap your code examples in HTML &lt;pre&gt;&nbsp; tags. "Pre tags" denote a pre-defined format, and are often used to wrap around code examples, with the color coding pertaining to that particular code-language and an equispaced font, which makes it possible to use indentations properly.</div><div style="color: black;"><br />
+</div><div style="color: black;">Most popular programming languages are supported in this method. C, C++ C#, python, and probably many others. Hoever, no support for FORTRAN - quantum chemists beware. If you know of a user-friendly syntax highlighter that does FORTRAN, do leave a comment! Everybody loves FORTRAN.</div><div style="color: black;"><br />
+</div><div style="color: black;">Here is a simple example of how a dumb python script looks after using CraftyFella's guide to set things up:</div><br />
+<pre class="brush: python">#!/usr/bin/python
+
+def print_string(string):
+    print string
+
+hello_world = "Hello world, look at my fancy code formatting!"
+
+for i in range(10):
+    print_string(hello_world)
+</pre><div style="color: black;"><br />
+</div><div style="color: black;">... and a little bit of C++:</div><br />
+<pre class="brush: cpp">//! Return size of collection
+//! \return size of collection
+unsigned int size() const {
+     return data_vector.size();
+}
+</pre><br />
+</div>

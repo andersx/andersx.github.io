@@ -1,0 +1,65 @@
+---
+layout: post
+title: Visualizing Pointer Aliasing in Python
+date: '2013-05-07T12:54:00.000+02:00'
+author: hellogetmyblogback
+tags:
+modified_time: '2013-05-08T10:57:58.748+02:00'
+blogger_id: tag:blogger.com,1999:blog-8160351477288734008.post-91298897278992501
+blogger_orig_url: https://combichem.blogspot.com/2013/05/visualizing-pointer-aliasing-in-python.html
+---
+
+<div class="separator" style="clear: both; text-align: center;">
+<a href="http://ip-pig.com/wp-content/uploads/2013/04/Python-Programming-Language.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" height="108" src="http://ip-pig.com/wp-content/uploads/2013/04/Python-Programming-Language.png" width="320" /></a></div>
+This is a concept that has annoyed many a newcomer to Python - including the author of this post. I will be talking briefly about this concept in my lecture next Thursday, and the excellent TA, <a class="g-profile" href="http://plus.google.com/111529974982597129664" target="_blank">+Jimmy Charnley Kromann</a>, pointed me to an example he saw on pythontutor. The Visualize tool on pythontutor is a very explicit way to illustrate what happens under the hood of python: <a code="a+%3D+%5B1.0,+2.0,+3.0,+4.0%5D%0Ab+%3D+a%0A%0Aprint+%22a+%3D+%22,+a%0Aprint+%22b+%3D+%22,+b%0A%0Aa%5B1%5D+%3D+99.0%0A%0Aprint+%22a+%3D+%22,+a%0Aprint+%22b+%3D+%22,+b&amp;mode=display&amp;cumulative=false&amp;heapPrimitives=false&amp;drawParentPointers=false&amp;textReferences=false&amp;showOnlyOutputs=false&amp;py=2&amp;curInstr=0" href="http://www.pythontutor.com/visualize.html%3C/a%3E%20%3Cbr%20/%3E%3Cbr%20/%3EEDIT:%20There%20seems%20be%20an%20issue%20with%20pythontutor%20at%20the%20moment.%20Click%20this%20link,%20if%20the%20embedded%20code%20below%20fails%20to%20run.%3Ca%20href=" http:="" visualize.html="" www.pythontutor.com="">http://www.pythontutor.com/visualize.html</a><br />
+<br />
+The Visualize tool on pythontutor is a very clever way to illustrate what happens under the hood of python: <a code="a+%3D+%5B1.0,+2.0,+3.0,+4.0%5D%0Ab+%3D+a%0A%0Aprint+%22a+%3D+%22,+a%0Aprint+%22b+%3D+%22,+b%0A%0Aa%5B1%5D+%3D+99.0%0A%0Aprint+%22a+%3D+%22,+a%0Aprint+%22b+%3D+%22,+b&amp;mode=display&amp;cumulative=false&amp;heapPrimitives=false&amp;drawParentPointers=false&amp;textReferences=false&amp;showOnlyOutputs=false&amp;py=2&amp;curInstr=0" href="http://www.pythontutor.com/visualize.html" http:="" visualize.html="" www.pythontutor.com="">http://www.pythontutor.com/visualize.html</a> <br />
+<br />
+EDIT: There seems to be a problem with python tutor at the moment. Click this link, if the embedded code below fails to load:&nbsp; <a code="a+%3D+%5B1.0,+2.0,+3.0,+4.0%5D%0Ab+%3D+a%0A%0Aprint+%22a+%3D+%22,+a%0Aprint+%22b+%3D+%22,+b%0A%0Aa%5B1%5D+%3D+99.0%0A%0Aprint+%22a+%3D+%22,+a%0Aprint+%22b+%3D+%22,+b&amp;mode=display&amp;cumulative=false&amp;heapPrimitives=false&amp;drawParentPointers=false&amp;textReferences=false&amp;showOnlyOutputs=false&amp;py=2&amp;curInstr=0" href="http://www.pythontutor.com/visualize.html#code=a+%3D+%5B1.0,+2.0,+3.0,+4.0%5D%0Ab+%3D+a%0A%0Aprint+%22a+%3D+%22,+a%0Aprint+%22b+%3D+%22,+b%0A%0Aa%5B1%5D+%3D+99.0%0A%0Aprint+%22a+%3D+%22,+a%0Aprint+%22b+%3D+%22,+b&amp;mode=display&amp;cumulative=true&amp;heapPrimitives=true&amp;drawParentPointers=true&amp;textReferences=false&amp;showOnlyOutputs=false&amp;py=2&amp;curInstr=0" http:="" visualize.html="" www.pythontutor.com="">Python Example</a> <br />
+<br />
+<span style="font-size: large;"><br /></span>
+<div style="text-align: center;">
+<span style="font-size: large;"><i>EDIT: embedded code not working - click link:</i></span></div>
+<div style="text-align: center;">
+<span style="font-size: large;"><a code="a+%3D+%5B1.0,+2.0,+3.0,+4.0%5D%0Ab+%3D+a%0A%0Aprint+%22a+%3D+%22,+a%0Aprint+%22b+%3D+%22,+b%0A%0Aa%5B1%5D+%3D+99.0%0A%0Aprint+%22a+%3D+%22,+a%0Aprint+%22b+%3D+%22,+b&amp;mode=display&amp;cumulative=false&amp;heapPrimitives=false&amp;drawParentPointers=false&amp;textReferences=false&amp;showOnlyOutputs=false&amp;py=2&amp;curInstr=0" href="http://www.pythontutor.com/visualize.html#code=a+%3D+%5B1.0,+2.0,+3.0,+4.0%5D%0Ab+%3D+a%0A%0Aprint+%22a+%3D+%22,+a%0Aprint+%22b+%3D+%22,+b%0A%0Aa%5B1%5D+%3D+99.0%0A%0Aprint+%22a+%3D+%22,+a%0Aprint+%22b+%3D+%22,+b&amp;mode=display&amp;cumulative=true&amp;heapPrimitives=true&amp;drawParentPointers=true&amp;textReferences=false&amp;showOnlyOutputs=false&amp;py=2&amp;curInstr=0" http:="" visualize.html="" www.pythontutor.com="">Python Example</a></span></div>
+<br />
+&nbsp; <br />
+<br />
+<!-- <iframe frameborder="0" height="500" src="http://pythontutor.com/iframe-embed.html#code=a+%3D+%5B1.0,+2.0,+3.0,+4.0%5D%0Ab+%3D+a%0A%0Aprint+%22a+%3D+%22,+a%0Aprint+%22b+%3D+%22,+b%0A%0Aa%5B1%5D+%3D+99.0%0A%0Aprint+%22a+%3D+%22,+a%0Aprint+%22b+%3D+%22,+b&amp;cumulative=false&amp;heapPrimitives=false&amp;drawParentPointers=false&amp;textReferences=false&amp;showOnlyOutputs=false&amp;py=2&amp;curInstr=0" width="800"> </iframe> -->
+
+If you want to avoid pointer aliasing,&nbsp; you usually want to do one of these three things in order to copy a to b: <br />
+<br />
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">1) </span><br />
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;"><br /></span>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">b = a[:]&nbsp;</span><br />
+<br />
+This takes a shallow copy. Personally, I don't like this option, because the slicing notation is not clear to everyone. But it is definitely the shorter notation. This will fail if you want to copy a list of lists.  Being a shallow copy, it does not copy lists of lists. It will merely&nbsp; copy the list of pointers to other "sub"-lists.<br />
+<br />
+<br />
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">2) </span><br />
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;"><br /></span>
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">import copy</span><br />
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">b = copy.copy(a)</span><br />
+<br />
+This takes a shallow copy. It is more clear from the code what this does, so this is usually my preferred approach. Still a shallow copy, however.<br />
+<br />
+<br />
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">3)</span><br />
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&nbsp;</span> <br />
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">import copy&nbsp;</span><br />
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">b = copy.deepcopy(a)</span><br />
+<br />
+<span style="font-family: inherit;">This is the fail-safe method and takes a copy of everything, so use this if you're in doubt. Works pretty much in every case. The down side is that it's usually slower to copy everything with deepcopy.</span><br />
+<br />
+<br />
+<div class="separator" style="clear: both; text-align: center;">
+<a href="http://www.openbookproject.net/thinkcs/python/english2e/_images/mult_references1.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" src="http://www.openbookproject.net/thinkcs/python/english2e/_images/mult_references1.png" /></a></div>
+<div class="separator" style="clear: both; text-align: center;">
+</div>
+<br />
+<div style="text-align: center;">
+<span style="font-family: inherit; font-size: x-small;"><u>Figure 1 </u></span><span style="font-size: x-small;">: a and b contain to the&nbsp;&nbsp;</span></div>
+<div style="text-align: center;">
+<span style="font-size: x-small;">word "banana" in two different ways.</span></div>
+<span style="font-size: x-small;">
+</span><span style="font-family: &quot;Courier New&quot;,Courier,monospace;"><br /></span>

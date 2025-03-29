@@ -1,0 +1,20 @@
+---
+layout: post
+title: 'FragBuilder: Setting up a scan of peptide conformations.'
+date: '2014-01-02T17:09:00.000+01:00'
+author: hellogetmyblogback
+tags:
+modified_time: '2014-01-02T17:09:01.506+01:00'
+blogger_id: tag:blogger.com,1999:blog-8160351477288734008.post-8831992765893305854
+blogger_orig_url: https://combichem.blogspot.com/2014/01/fragbuilder-setting-up-scan-of-peptide.html
+---
+
+This post covers the essentials of how to set up a scan of different peptide conformations. We have used this method to calculate more than 1.5M QM calculation on model peptides in our group.<br />
+<br />
+In this example we make a tri-glycine peptide and scan over the phi/psi torsion angles between -180 and 180 degrees with 60 degrees spacing.<br />
+<br />
+For each conformation, the MMFF94 force field energy is printed and the structure is saved as an XYZ file.<br />
+<br />
+===
+<script src="https://gist.github.com/andersx/8221316.js"></script>
+===

@@ -1,0 +1,188 @@
+---
+layout: post
+title: Guistos - a PHAISTOS GUI
+date: '2012-06-13T18:14:00.002+02:00'
+author: hellogetmyblogback
+tags:
+modified_time: '2012-06-13T18:14:49.548+02:00'
+thumbnail: https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiTpKHpCGIyVclVIgsEViMxux0oTxPDRzS6K6zRosDkL8Wsmx3_Shi5phNMBgW5yAKGFBRwmrzsVb9EhCCuFLxYOOxzYNhd2og54uPcPMt9Wo_sMRQAJ6uui6fXXRvRAU5m7PojCSZvCOgd/s72-c/Screenshot-Guistos+-+a+Phaistos+GUI.png
+blogger_id: tag:blogger.com,1999:blog-8160351477288734008.post-2384723833626273678
+blogger_orig_url: https://combichem.blogspot.com/2012/06/guistos-phaistos-gui.html
+---
+
+<div style="text-align: justify;">
+This is what can be considered the user documentation for <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">Guistos - a PHAISTOS GUI</span>. I will upload the code to here soon.</div>
+<div style="text-align: justify;">
+<br /></div>
+<div style="text-align: justify;">
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">Guistos</span> is aimed at people who are new to molecular modeling, such as for instance bachelor students. It assumes relatively little knowledge and also limited Linux skills.</div>
+<div style="text-align: justify;">
+I've put some care into setting sane default values and sets of good mixes of Monte Carlo moves.</div>
+<div style="text-align: justify;">
+<br /></div>
+<div style="text-align: justify;">
+Developers will probably still prefer to use <b><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">{$FAVOURITE_EDITOR}</span></b> and edit your text-based input files by hand.</div>
+<div style="text-align: justify;">
+If you want your <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">PHAISTOS</span> module supported in <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">Guistos</span>, give me a mail at: <b><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">andersx (a) nano.ku.dk</span></b> and we can work something out.</div>
+<div style="text-align: justify;">
+<br /></div>
+<div style="text-align: justify;">
+<br /></div>
+<div class="separator" style="clear: both; text-align: center;">
+<a href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiTpKHpCGIyVclVIgsEViMxux0oTxPDRzS6K6zRosDkL8Wsmx3_Shi5phNMBgW5yAKGFBRwmrzsVb9EhCCuFLxYOOxzYNhd2og54uPcPMt9Wo_sMRQAJ6uui6fXXRvRAU5m7PojCSZvCOgd/s1600/Screenshot-Guistos+-+a+Phaistos+GUI.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" height="640" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiTpKHpCGIyVclVIgsEViMxux0oTxPDRzS6K6zRosDkL8Wsmx3_Shi5phNMBgW5yAKGFBRwmrzsVb9EhCCuFLxYOOxzYNhd2og54uPcPMt9Wo_sMRQAJ6uui6fXXRvRAU5m7PojCSZvCOgd/s640/Screenshot-Guistos+-+a+Phaistos+GUI.png" width="414" /></a></div>
+<div style="text-align: justify;">
+<br /></div>
+<div style="text-align: justify;">
+<br /></div>
+<div style="text-align: justify;">
+<br /></div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><b>General Options</b></span></div>
+<div style="text-align: justify;">
+<br /></div>
+<div style="text-align: justify;">
+<b>Start from AA/PDB-file:</b></div>
+<div style="text-align: justify;">
+In order to tell <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">PHAISTOS</span> what the sequence of the protein is, you must supply a <b><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">.aa</span></b>-file containing the sequence. You can also choose to have the sequence (but not structure!) read-in from a <b style="font-family: &quot;Courier New&quot;,Courier,monospace;">.pdb</b>-file or <b style="font-family: &quot;Courier New&quot;,Courier,monospace;">.pqr</b>-file which are also <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">PHAISTOS</span> compatible.</div>
+<div style="text-align: justify;">
+<br /></div>
+<div style="text-align: justify;">
+<b>Initialize from PDB structure:</b></div>
+<div style="text-align: justify;">
+If you supply <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">PHAISTOS</span> with a <b style="font-family: &quot;Courier New&quot;,Courier,monospace;">.pdb</b>-file or <b style="font-family: &quot;Courier New&quot;,Courier,monospace;">.pqr</b>-file, you can "cheat" and start your simulation from the supplied structure. This is useful for things as refinement of homology models and simulation of protein dynamics.</div>
+<div style="text-align: justify;">
+<br /></div>
+<div style="text-align: justify;">
+<b>Short Title:</b></div>
+<div style="text-align: justify;">
+The title is a short name, which is applied to output files from the simulation. sample files will be put in a subfolder to the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">Guistos</span> default output path (usually <b><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">/home/$USER/folds</span></b>), and the muninn logfile will also be named with this title.</div>
+<div style="text-align: justify;">
+<br /></div>
+<div style="text-align: justify;">
+<b>Iterations (per thread) and Parallel threads:</b> </div>
+<div style="text-align: justify;">
+Iterations is how many Monte Carlo moves are carried out during a simulation. Parallel threads is the number of parallel simulations.</div>
+<div style="text-align: justify;">
+The total number of iterations in your ensemble will be the product of these two values.</div>
+<div style="text-align: justify;">
+<br /></div>
+<div style="text-align: justify;">
+<br /></div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><b>Energy Options </b></span></div>
+<div style="text-align: justify;">
+<br /></div>
+<div style="text-align: justify;">
+<b>Molecular Mechanics Force Field:</b></div>
+<div style="text-align: justify;">
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">PHAISTOS</span> currently supports two <a href="http://en.wikipedia.org/wiki/Molecular_mechanics">molecular mechanics</a> force fields. The <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">OPLS-AA/L</span> force field and the coarse-grained <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">PROFASI</span> force field. <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">PROFASI</span> is much faster than <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">OPLS-AA/L</span>, while <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">OPLS-AA/L </span>is more accurate.</div>
+<div style="text-align: justify;">
+<br /></div>
+<div style="text-align: justify;">
+<b>Spectroscopic Data:</b></div>
+<div style="text-align: justify;">
+<br /></div>
+<div style="text-align: justify;">
+</div>
+<div style="text-align: justify;">
+<b>Model:</b></div>
+<div style="text-align: justify;">
+By supplying a model of prediction of spectroscopic data from a given structure, is is possible to model the agreement between a proposed structure and experimental data.&nbsp;</div>
+<div style="text-align: justify;">
+Currently <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">Guistos</span> supports backbone chemical shift data via the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">CamShift</span> module, and amide proton chemical shift data via the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">ProCS</span>&nbsp; module (it's pronounced <i>pro-see-es</i>).</div>
+<div style="text-align: justify;">
+<br /></div>
+<div style="text-align: justify;">
+<b>Data File:</b></div>
+<div style="text-align: justify;">
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">CamShift</span> needs a set of experimental data in the NMR-STAR format, while <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">ProCS</span> uses the internal <b style="font-family: &quot;Courier New&quot;,Courier,monospace;">.bcs</b>-format.</div>
+<div style="text-align: justify;">
+<br /></div>
+<div style="text-align: justify;">
+<br /></div>
+<div style="text-align: justify;">
+<span style="font-size: large;"><b>Monte Carlo Options</b></span></div>
+<div style="text-align: justify;">
+<br /></div>
+<div style="text-align: justify;">
+<b>Metropolis-Hastings:</b></div>
+<div style="text-align: justify;">
+This selection is a simulation at a constant temperature which must be supplied by the user. The default value is 300 K. </div>
+<div style="text-align: justify;">
+<br /></div>
+<div style="text-align: justify;">
+<b>Muninn:</b></div>
+<div style="text-align: justify;">
+This type of Monte Carlo is a more advanced simulation, where the temperature is dynamically adjusted throughout the simulation in order to sample more efficiently from the interesting low energy regions of conformation space.</div>
+<div style="text-align: justify;">
+The user must supply an upper and a lower bound of the temperature. Further more, two sampling schemes are supported through the Muninn module, 1/k and multicanonical histogram weights.</div>
+<div style="text-align: justify;">
+<br /></div>
+<div style="text-align: justify;">
+<b>Simulated Annealing:</b></div>
+<div style="text-align: justify;">
+This type of Monte&nbsp; Carlo is almost identical to Metropolis-Hastings, only the temperature is lowered at a constant rate from start to end of the simulation.</div>
+<div style="text-align: justify;">
+<br /></div>
+<div style="text-align: justify;">
+<b>Greedy Optimizaion:</b></div>
+<div style="text-align: justify;">
+This optimization technique will run a standard Monte Carlo simulation, where only structures with a lower energy than the previous structure are accepted each step.</div>
+<div style="text-align: justify;">
+<br /></div>
+<div style="text-align: justify;">
+<br /></div>
+<div style="text-align: justify;">
+<b><span style="font-size: large;">Monte Carlo Move Sets</span></b></div>
+<div style="text-align: justify;">
+<br /></div>
+<div style="text-align: justify;">
+<b>Backbone Moves:</b></div>
+<div style="text-align: justify;">
+There are three selections for&nbsp; backbone moves step sizes; "<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">small</span>", "<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">medium</span>" and "<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">large</span>". All three are mixtures of <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">semi-local</span>, <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">CRISP</span> and <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">DBN</span> moves. Choosing "<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">small</span>" is ideal for things such as refinement and optimization, while "<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">medium</span>" is meant for <i>ab inito</i> folding, and "<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">large</span>" is if you want to sample large parts of conformational space quickly. </div>
+<div style="text-align: justify;">
+For the exact mixes, I suggest looking in the source code, as this may change. Note that if the <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">PROFASI</span> force field is selected, <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">CRISP</span> moves are replaced by <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">semi-local</span> moves, since <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">PROFASI</span> in its current implementation does not allow bond angles and lengths to vary (torsion angles are still degrees of freedom)</div>
+<div style="text-align: justify;">
+<br /></div>
+<div style="text-align: justify;">
+<br /></div>
+<div style="text-align: justify;">
+</div>
+<div style="text-align: justify;">
+<b>Side Chain Moves:</b></div>
+<div style="text-align: justify;">
+The same logic as for backbone moves applies here. Only these moves are mixes of <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">BASILISK</span>, <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">BASILISK-local</span> and <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">sidechain-uniform</span> moves.</div>
+<div style="text-align: justify;">
+The <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">sidechain-uniform</span> moves are designed to escape salt-bridges more easily. The <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">BASILISK</span> type moves are able sample likely side chain angles depending on the backbone angles of the residue.</div>
+<div style="text-align: justify;">
+<br /></div>
+<div style="text-align: justify;">
+<b>Compensate for move bias:</b></div>
+<div style="text-align: justify;">
+The default mixes of backbone and side chain moves do not sample from all parts of conformational space with the same frequency. This is good if you want to find good structures quicker, but not that great if you want to model the average behavior of a protein.&nbsp;</div>
+<div style="text-align: justify;">
+It is possible to compensate for this "move bias" by adding an energy to your samples, depending on how likely they are to be proposed. </div>
+<div style="text-align: justify;">
+<br /></div>
+<div style="text-align: justify;">
+<br /></div>
+<div style="text-align: justify;">
+Press the "<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">Save Config</span>" button to save your config-file. Start phaistos with your settings by something like:</div>
+<div style="text-align: justify;">
+<br /></div>
+<div style="text-align: justify;">
+<b><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">phaistos --config-file my_folding.config</span></b></div>
+<div style="text-align: justify;">
+<br /></div>
+<div style="text-align: justify;">
+<br /></div>
+<div style="text-align: justify;">
+<br /></div>
+<div style="text-align: justify;">
+<br /></div>
+<div style="text-align: justify;">
+<br /></div>
+<div style="text-align: justify;">
+<b>Supported <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">PHAISTOS </span>versions:</b></div>
+<div style="text-align: justify;">
+Currently <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">Guistos</span> is only tested with <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">PHAISTOS 1.0rc1 rev 324</span>.</div>

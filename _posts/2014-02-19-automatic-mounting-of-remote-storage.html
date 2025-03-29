@@ -1,0 +1,38 @@
+---
+layout: post
+title: Automatic mounting of remote storage via SSHFS on Amazon EC2 instances
+date: '2014-02-19T11:04:00.004+01:00'
+author: hellogetmyblogback
+tags:
+modified_time: '2014-02-19T11:04:56.776+01:00'
+blogger_id: tag:blogger.com,1999:blog-8160351477288734008.post-2446382380226116797
+blogger_orig_url: https://combichem.blogspot.com/2014/02/automatic-mounting-of-remote-storage.html
+---
+
+In this blog I demonstrate how you can create an Amazon EC2 instance image that will automount a folder on a remote server via SSHFS.<br />
+The purpose here is to fire up a EC2 compute server, run a program and save the output from that program on our local compute cluster at the university.<br /><br />Basically, you just need to a line to /etc/fstab and save the instance as an image (that's what I did).<br />
+<br />
+<br />
+What you need:<br />
+<br />
+<ul>
+<li>An Amazon EC2 instance with sshfs installed.</li>
+<li>A user with SSH keys properly setup to the remote system (the SSH keys cannot require a passphrase).</li>
+</ul>
+Your remote server has a folder that is named remote_folder and your instance has a folder named local_folder. The default username on Amazon is "Ubuntu" for Ubuntu instances, so I'm using this as an example. <br />
+<br />
+<b><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">sshfs#ubuntu@remoteserver:/home/ubuntu/remote_folder/ /home/ubuntu/local_folder/&nbsp; fuse&nbsp;&nbsp;&nbsp; user,delay_connect,_netdev,reconnect,uid=1000,gid=1000,IdentityFile=/home/ubuntu/.ssh/id_rsa,idmap=user,allow_other,workaround=rename&nbsp; 0&nbsp;&nbsp; 0 </span></b><br />
+<br />
+Everything is one long line that goes into /etc/fstab. The IdentityFile points to your SSH key. You need the "_netdev" keywords to mount the SSHFS folder after network becomes available. The "reconnect" keyword does what it reads, so throw that in as well.<br />
+I read a few posts from other people who had difficulties mounting SSHFS properly without the "delay_connect" and "workaround=rename" keywords, so I added those for good measure.<br />
+<br />
+Note that you need the trailing / after the folder names! I won't work without (and I'm talking from bitter experience here). <br />
+<br />
+Furthermore, you want to add the following line to /etc/ssh/ssh_config<br />
+<br />
+<b><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">ServerAliveInterval 5</span></b><br />
+<br />
+This makes SSH send a keep alive signal every 5 seconds so you don't get disconnected due to being idle. <br />
+<br />
+Apart from that I think the above should be self-explanatory (for someone looking for this information).<br />
+<br />

@@ -1,0 +1,105 @@
+---
+layout: post
+title: 'FragBuilder: Installation'
+date: '2013-12-27T14:29:00.000+01:00'
+author: hellogetmyblogback
+tags:
+modified_time: '2013-12-27T14:29:00.840+01:00'
+blogger_id: tag:blogger.com,1999:blog-8160351477288734008.post-7247575803958068734
+blogger_orig_url: https://combichem.blogspot.com/2013/12/fragbuilder-installation.html
+---
+
+With the FragBuilder library out as a <a href="https://peerj.com/preprints/169v2/">preprint from PeerJ</a> and the library available at <a href="https://github.com/jensengroup/fragbuilder">https://github.com/jensengroup/fragbuilder</a>, I am going to make a couple of blog posts to get you started using FragBuilder. You can access the manual via the GitHub page linked above.<br />
+<br />
+This post will guide you through the installation of the FragBuilder library.<br />
+<br />
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="https://dl.dropboxusercontent.com/u/17435887/fragbuilder/model_angles_crop.png" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="228" src="https://dl.dropboxusercontent.com/u/17435887/fragbuilder/model_angles_crop.png" title=" " width="400" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;"><b>Figure 1:</b> Example of peptide model made using the Fragbuilder library<u><br /></u></td></tr>
+</tbody></table>
+<br />
+<br />
+<br />
+FragBuilder will run about every Linux distribution with a recent Python 2.x interpreter.<br />
+<br />
+You need to havethree things installed before FragBuilder can run. Install of these can be found in the 2nd half of this post.<br />
+<ol>
+<li>NumPy </li>
+<li>Open Babel with Python bindings</li>
+<li>git (in order to get FragBuilder from GitHub)</li>
+</ol>
+To actually download FragBuilder you need to use git, as FragBuilder is stored and maintained through GitHub. To clone the latest version do this:<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&nbsp;</span><br />
+<blockquote class="tr_bq">
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">$ git clone git://github.com/jensengroup/fragbuilder</span></blockquote>
+This will download (clone) FragBuilder to a folder named "<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">fragbuilder</span>". There is nothing that needs to be compiled, so in principle, FragBuilder is now installed and works.<br />
+<br />
+To actually be able to use FragBuilder from a Python script, you need to export the path to the FragBuilder library to your $PYTHONPATH. For instance, on my laptop, I do the export like this:<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&nbsp;</span><br />
+<blockquote class="tr_bq">
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">\$ export PYTHONPATH=/home/andersx/dev/fragbuilder:\$PYTHONPATH</span>&nbsp;</blockquote>
+Now you should be able to import FragBuilder from Python. You can copy this line into your <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">~/.bashrc</span> file if you want don't want to export this every time you log in.<br />
+<br />
+To test your installation fire up Python and import FragBuilder:<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&nbsp;</span><br />
+<blockquote class="tr_bq">
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">$ python</span> <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&nbsp;</span><br />
+<br />
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">Python 2.7.3 (default, Sep 26 2013, 20:03:06) <br />[GCC 4.6.3] on linux2<br />Type "help", "copyright", "credits" or "license" for more information.</span><br />
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&gt;&gt;&gt; import fragbuilder<br />&gt;&gt;&gt; print fragbuilder.__version__<br />1.0</span><span style="font-family: &quot;Courier New&quot;,Courier,monospace;"><br /></span><span style="font-family: &quot;Courier New&quot;,Courier,monospace;"><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&gt;&gt;&gt;&nbsp; </span></span></blockquote>
+If you don't get any errors FragBuilder now works.<br />
+<br />
+<br />
+<br />
+<b>Installation of dependencies:</b><br />
+<br />
+<b>1) NumPy:</b><br />
+<br />
+<br />
+In most Linux distributions, NumPy is can be obtained through a package manager. The commands are usually.<br />
+<br />
+For Ubuntu/Debian distributions:<br />
+<blockquote class="tr_bq">
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">sudo apt-get install </span><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">python-numpy</span>&nbsp;</blockquote>
+For Fedora/Red Hat distributions:<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&nbsp;</span><br />
+<blockquote class="tr_bq">
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">su</span><br />
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">yum install python-numpy</span></blockquote>
+See this link, if you still have troubles installing NumPy: <a href="http://www.scipy.org/install.html">http://www.scipy.org/install.html</a> <br />
+<br />
+<br />
+<b>2) Open Babel with Python bindings:</b><br />
+<br />
+In most Linux distributions, Open Babel is can be obtained through a package manager. The commands are usually.<br />
+<br />
+For Ubuntu/Debian distributions:<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&nbsp;</span><br />
+<blockquote class="tr_bq">
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">sudo apt-get install python-openbabel</span>&nbsp;</blockquote>
+For Fedora/Red Hat distributions:<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&nbsp;</span><br />
+<blockquote class="tr_bq">
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">su</span><br />
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">yum install python-openbabel</span>&nbsp;</blockquote>
+Optionally, you can compile and install Open Babel yourself. This may be required if you get a certain problem with setting dihedral angles to 180 degrees.<br />
+In older versions of Open Babel you are only allowed to set the dihedral angle to 179.96 degrees. I recently submitted a patch to fix this, but I don't know when the changes will go "live" onto repositories, etc.<br />
+<br />
+I made a short guide here:<br />
+<a href="http://combichem.blogspot.dk/2013/12/compiling-open-babel-with-python.html">http://combichem.blogspot.dk/2013/12/compiling-open-babel-with-python.html</a><br />
+<br />
+There is some extra stuff here from the Open Babel manual:<br />
+<a href="http://openbabel.org/docs/dev/Installation/install.html">&nbsp;http://openbabel.org/docs/dev/Installation/install.html</a><br />
+<br />
+<br />
+&nbsp;<b>3) Git:</b><br />
+<br />
+Git is pretty much the program you use to download FragBuilder from GitHub. You can also use Git to submit patches back to the repository. Git also does a million other things, but you don't need to know more at this point.<br />
+<br />
+In most Linux distributions, git is can be obtained through a package manager. The commands are usually.<br />
+<br />
+For Ubuntu/Debian distributions:<br />
+<blockquote class="tr_bq">
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">sudo apt-get install git</span>&nbsp;</blockquote>
+For Fedora/Red Hat distributions:<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">&nbsp;</span><br />
+<blockquote class="tr_bq">
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">su</span><br />
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">yum install git</span></blockquote>
+<br />
+&nbsp;I think that is all. If not, feel free to leave a message!<br />
+<br />
+<br />

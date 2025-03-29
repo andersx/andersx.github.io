@@ -1,0 +1,34 @@
+---
+layout: post
+title: PDB V3 to V2 file converter and CamShift 1.35 notes
+date: '2011-10-17T13:38:00.002+02:00'
+author: hellogetmyblogback
+tags:
+- PDB naming convention v2 v3 converter openbabel python camshift chemical shift
+modified_time: '2011-10-17T13:38:56.330+02:00'
+thumbnail: https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj1ialok0bu8km44Ug2NkrAlzKm4tioln5Eu6xXuwIuGbkJcwkukhpf3SxYPWEHmFc_0kBLxMW0t99uUOXOmcuTledDWyDDznDPQEH8ZFVS6KlGr5BZXAUmzvsaSvcHeDpEVOgg_AarCqyQ/s72-c/Download-icon.png
+blogger_id: tag:blogger.com,1999:blog-8160351477288734008.post-562252053967161673
+blogger_orig_url: https://combichem.blogspot.com/2011/10/pdb-v3-to-v2-file-converter-and.html
+---
+
+<div class="separator" style="clear: both; text-align: center;"></div><br />
+<div style="text-align: justify;">I stubmled upon a program called CamShift 1.35, which predicts chemical shifts from a coordinates in a PDB file. However, everytime I tried to supply it with a seemingly&nbsp; standard PDB file, adhereing to every PDB naming convention I could find, CamShift 1.35 would complain about missing atoms and used an internal force-field to add hydrogens and whatnot at coordinates that were not correspoding to the coordinates I had supplied.</div><div style="text-align: justify;">A little trick I found, was to uncomment the lines 278-279 in the camshift-1.35/bin/camshift.cpp file:</div><div style="text-align: justify;"><br />
+</div><div style="text-align: justify;"><span style="font-family: &quot;Courier New&quot;,Courier,monospace;">//&nbsp; for(int r=0;r&lt;rep.size();r++)</span><br />
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">//&nbsp;&nbsp;&nbsp; cout&lt;&lt;"\t"&lt;&lt;p.atom_name(rep[r],Almost::Protein::BASE)&lt;&lt;"\n";</span></div><div style="text-align: justify;"><br />
+</div><div style="text-align: justify;">&nbsp;and the recompile. This will add the names of all atoms that are added. Please note, that protonation states are adjusted entirely by CamShift, so even if you give it a proper PDB file you will have things added, such as H-gamma on cysteine residues, even despite of actual cys-bridges in the supplied PDB file.</div><div style="text-align: justify;"></div><div style="text-align: justify;"><br />
+</div><div style="text-align: justify;">At any rate, by doing the above, I discovered that the CamShift 1.35 code uses the old PDB v2 naming convention (which was deprecated during the last millennium). Sadly I couldn't find any file converter that would let convert a standard (currently PDB v3) PDB file to an older v2 type. Not even my all-time favourite file-converter OpenBabel was capable of this. Long story short, I found the proper naming conversions and put it in a short python script.</div><div style="text-align: justify;"><br />
+</div>Usage is like this:<br />
+<br />
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">$ python pdb_v3_to_v2.py myfile.pdb</span><br />
+<br />
+This will print the new file to standard out put. If you want it in a new file, simply use the awesomeness of shell:<br />
+<br />
+<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">$ <span style="font-family: &quot;Courier New&quot;,Courier,monospace;">python pdb_v3_to_v2.py myfile.pdb &gt; outfile.pdb</span></span><br />
+<br />
+Since it's written in standard Python, it will work on any platform (Windows, UNIX, Linux, MacOS, etc) and you need not worry about compiling, just a working Python interpreter is enough.<br />
+<br />
+<br />
+Have fun converting. Shoot me a message, if you find any bugs or quirks. Download the program here:<br />
+<br />
+<br />
+<div class="separator" style="clear: both; text-align: center;"><a href="http://dl.dropbox.com/u/17435887/pdb_v3_to_v2.py" style="margin-left: 1em; margin-right: 1em;"><img border="0" height="256" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj1ialok0bu8km44Ug2NkrAlzKm4tioln5Eu6xXuwIuGbkJcwkukhpf3SxYPWEHmFc_0kBLxMW0t99uUOXOmcuTledDWyDDznDPQEH8ZFVS6KlGr5BZXAUmzvsaSvcHeDpEVOgg_AarCqyQ/s320/Download-icon.png" width="320" /></a></div><div style="text-align: center;"><a href="http://dl.dropbox.com/u/17435887/pdb_v3_to_v2.py">http://dl.dropbox.com/u/17435887/pdb_v3_to_v2.py</a></div><div style="text-align: center;">(click link or picture to  download)</div>

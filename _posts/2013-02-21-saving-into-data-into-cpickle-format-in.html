@@ -1,0 +1,42 @@
+---
+layout: post
+title: Saving data into cPickle format (in Python)
+date: '2013-02-21T14:39:00.000+01:00'
+author: hellogetmyblogback
+tags:
+modified_time: '2013-02-22T15:45:20.082+01:00'
+blogger_id: tag:blogger.com,1999:blog-8160351477288734008.post-2193218398867009815
+blogger_orig_url: https://combichem.blogspot.com/2013/02/saving-into-data-into-cpickle-format-in.html
+---
+
+I recently created a python script which generated a huge-ass dictionary, which I wanted to save and use later in another program. The simple solution was simpy to print my dictionary and pipe it into txt file. However, the txt file ended up being almost 500MB large, and using eval() to parse the text string into a Python object took around 5 minutes. Enter the cPickle module. cPickle uses a C implementation of handling pickled stuff, which effectively means that it's faster. In my case loading time decreased to few seconds, and the size of the cPickle'd file was 50% of the plain .txt file.<br />
+<br />
+Here are a couple of snippets to get you started using cPickle.
+
+
+First import cPickle. The cPickle module should be included in most Python distributions
+<br />
+<pre class="brush: python">import cPickle</pre>
+In this example, we have an array called "<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">large_array</span>" created by the "<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">create_large_array()</span>" function. I want to store "<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">large_array</span>" in a file called "<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">large_array.cpickle</span>".
+<br />
+<pre class="brush: python">large_array = create_large_array()
+output_filename = "large_array.cpickle"
+
+f = open(output_filename,"wb")
+cPickle.dump(large_array, f, protocol=2)
+f.close()
+</pre>
+In this example "<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">open()</span>" is called with the second argument "<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">wb</span>", which tells Python to open the file in write/binary mode.
+
+"<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">cPickle.dump()</span>" dumps "<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">large_array</span>" into "<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">f</span>" using "<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">protocol=2</span>". cPickle has several different modes which all do the same -- protocol 2 is the fastest.<br />
+<br />
+If you want to load the array from&nbsp; "<span style="font-family: &quot;Courier New&quot;,Courier,monospace;">large_array.cpickle</span>" in another script, you can use something like this:<br />
+<pre class="brush: python">def load_pickle(filename):
+    f = open(filename,"rb")
+    p = cPickle.load(f)
+    f.close()
+    return(p)
+
+
+large_array = load_pickle("large_array.cpickle")
+</pre>
