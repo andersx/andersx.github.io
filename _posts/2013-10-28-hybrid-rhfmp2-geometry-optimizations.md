@@ -11,18 +11,7 @@ blogger_orig_url: https://combichem.blogspot.com/2013/10/hybrid-rhfmp2-geometry-
 This is a short post on a paper we are submitting to PLOS ONE. It is of course already (and have been for quite some time) available from arXiv:
 
 
-
-
-
-
-
-========================================================================
-
-
-
 [**Hybrid RHF/MP2 geometry optimizations with the Effective Fragment Molecular Orbital Method**](http://arxiv.org/abs/1305.0676)
-
-
 
 
 Anders S. Christensen, Casper Steinmann, Dmitri G. Fedorov, Jan H. Jensen
@@ -46,12 +35,8 @@ Anders S. Christensen, Casper Steinmann, Dmitri G. Fedorov, Jan H. Jensen
 
 <http://arxiv.org/abs/1305.0676>
 
-========================================================================
 
-
-
-
-# Short summary:
+### Short summary:
 
 
 
