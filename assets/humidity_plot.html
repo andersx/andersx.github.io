@@ -9,13 +9,14 @@
       margin: 0;
       background-color: #111;
     }
+    #plot {
+      background-color: #111;
+    }
   </style>
 </head>
 <body>
   <div id="plot" style="width:100vw; height:100vh;"></div>
   <script>
-    console.log("Plotly loaded version:", Plotly.version);
-
     const trace = {
       x: ['2025-01-01', '2025-01-02', '2025-01-03'],
       y: [45, 48, 50],
@@ -25,10 +26,25 @@
     };
 
     const layout = {
-      title: "Dark Theme Test",
-      xaxis: { title: "Date" },
-      yaxis: { title: "Humidity (%)" },
-      template: "plotly_dark",
+      title: {
+        text: "Humidity Over Time",
+        font: { color: "#fff" }
+      },
+      xaxis: {
+        title: "Timestamp",
+        color: "#fff",
+        gridcolor: "#333"
+      },
+      yaxis: {
+        title: "Humidity (%)",
+        color: "#fff",
+        gridcolor: "#333"
+      },
+      plot_bgcolor: "#111",
+      paper_bgcolor: "#111",
+      font: {
+        color: "#fff"
+      },
       height: 600
     };
 
