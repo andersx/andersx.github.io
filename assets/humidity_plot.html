@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Plotly Dark Test</title>
+  <title>Humidity Plot</title>
   <script src="https://cdn.plot.ly/plotly-2.27.1.min.js"></script>
   <style>
     body {
@@ -17,38 +17,60 @@
 <body>
   <div id="plot" style="width:100vw; height:100vh;"></div>
   <script>
-    const trace = {
-      x: ['2025-01-01', '2025-01-02', '2025-01-03'],
-      y: [45, 48, 50],
-      mode: 'lines+markers',
-      type: 'scatter',
-      name: 'Humidity'
-    };
+    const DATA_URL = "https://raw.githubusercontent.com/andersx/data-upload/refs/heads/master/sensor_data.csv";
 
-    const layout = {
-      title: {
-        text: "Humidity Over Time",
-        font: { color: "#fff" }
-      },
-      xaxis: {
-        title: "Timestamp",
-        color: "#fff",
-        gridcolor: "#333"
-      },
-      yaxis: {
-        title: "Humidity (%)",
-        color: "#fff",
-        gridcolor: "#333"
-      },
-      plot_bgcolor: "#111",
-      paper_bgcolor: "#111",
-      font: {
-        color: "#fff"
-      },
-      height: 600
-    };
+    fetch(DATA_URL)
+      .then(response => response.text())
+      .then(text => {
+        const lines = text.trim().split("\n");
+        const timestamps = [];
+        const humidity = [];
 
-    Plotly.newPlot('plot', [trace], layout);
+        for (let line of lines) {
+          const [timestamp, temp, hum] = line.split(",");
+          if (timestamp && hum) {
+            timestamps.push(timestamp);
+            humidity.push(parseFloat(hum));
+          }
+        }
+
+        const trace = {
+          x: timestamps,
+          y: humidity,
+          mode: "lines+markers",
+          type: "scatter",
+          name: "Humidity"
+        };
+
+        const layout = {
+          title: {
+            text: "Humidity Over Time",
+            font: { color: "#fff" }
+          },
+          xaxis: {
+            title: "Timestamp",
+            color: "#fff",
+            gridcolor: "#333"
+          },
+          yaxis: {
+            title: "Humidity (%)",
+            color: "#fff",
+            gridcolor: "#333"
+          },
+          plot_bgcolor: "#111",
+          paper_bgcolor: "#111",
+          font: {
+            color: "#fff"
+          },
+          height: 600
+        };
+
+        Plotly.newPlot('plot', [trace], layout);
+      })
+      .catch(error => {
+        document.getElementById("plot").innerText = "Failed to load data.";
+        console.error("Error loading CSV:", error);
+      });
   </script>
 </body>
 </html>
