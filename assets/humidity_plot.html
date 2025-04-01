@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Humidity Plot</title>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.0/papaparse.min.js"></script>
+  <style>
+    body {
+      margin: 0;
+      background-color: #111;
+    }
+  </style>
+</head>
+<body>
+  <div id="plot" style="width:100%; height:100vh;"></div>
+
+  <script>
+    const DATA_URL = "https://raw.githubusercontent.com/andersx/data-upload/refs/heads/master/sensor_data.csv";
+
+    Papa.parse(DATA_URL, {
+      download: true,
+      header: false,
+      dynamicTyping: true,
+      complete: function(results) {
+        const rows = results.data;
+
+        // Skip bad rows
+        const cleaned = rows.filter(row => row.length >= 3 && row[1] !== "" && row[2] !== "");
+
+        const timestamps = cleaned.map(row => row[0]);
+        const humidity = cleaned.map(row => parseFloat(row[2]));
+
+        const trace = {
+          x: timestamps,
+          y: humidity,
+          mode: "lines+markers",
+          name: "Humidity",
+          type: "scatter"
+        };
+
+        const layout = {
+          title: "Humidity Over Time",
+          xaxis: { title: "Timestamp" },
+          yaxis: { title: "Humidity (%)" },
+          template: "plotly_dark",
+          height: 600
+        };
+
+        Plotly.newPlot("plot", [trace], layout);
+      }
+    });
+  </script>
+</body>
+</html>
+
