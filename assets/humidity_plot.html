@@ -2,58 +2,37 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Humidity Plot</title>
+  <title>Plotly Dark Test</title>
   <script src="https://cdn.plot.ly/plotly-2.27.1.min.js"></script>
   <style>
     body {
-      background-color: #111;
       margin: 0;
-    }
-    #plot {
       background-color: #111;
     }
   </style>
 </head>
 <body>
-  <div id="plot" style="width:100%; height:100vh;"></div>
-
+  <div id="plot" style="width:100vw; height:100vh;"></div>
   <script>
-    const DATA_URL = "https://raw.githubusercontent.com/andersx/data-upload/refs/heads/master/sensor_data.csv"
+    console.log("Plotly loaded version:", Plotly.version);
 
-    fetch(DATA_URL)
-      .then(response => response.text())
-      .then(text => {
-        const lines = text.trim().split("\n");
-        const timestamps = [];
-        const humidity = [];
+    const trace = {
+      x: ['2025-01-01', '2025-01-02', '2025-01-03'],
+      y: [45, 48, 50],
+      mode: 'lines+markers',
+      type: 'scatter',
+      name: 'Humidity'
+    };
 
-        for (let line of lines) {
-          const [timestamp, temp, hum] = line.split(",");
-          if (timestamp && hum) {
-            timestamps.push(timestamp);
-            humidity.push(parseFloat(hum));
-          }
-        }
+    const layout = {
+      title: "Dark Theme Test",
+      xaxis: { title: "Date" },
+      yaxis: { title: "Humidity (%)" },
+      template: "plotly_dark",
+      height: 600
+    };
 
-        const trace = {
-          x: timestamps,
-          y: humidity,
-          mode: "lines+markers",
-          type: "scatter",
-          name: "Humidity"
-        };
-
-        const layout = {
-          title: "Humidity Over Time",
-          xaxis: { title: "Timestamp" },
-          yaxis: { title: "Humidity (%)" },
-          template: "plotly_dark",
-          height: 600
-        };
-
-        Plotly.newPlot("plot", [trace], layout);
-      });
+    Plotly.newPlot('plot', [trace], layout);
   </script>
 </body>
 </html>
