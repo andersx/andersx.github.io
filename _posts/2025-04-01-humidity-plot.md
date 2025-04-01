@@ -4,7 +4,7 @@ title: "Live Humidity Plot"
 date: 2025-04-01
 ---
 
-Curious about the humidity levels around my workspace? This interactive Plotly chart shows real-time data pulled directly from a live CSV file hosted on GitHub.
+This interactive Plotly chart shows real-time data pulled directly from a live CSV file hosted on GitHub.
 
 The data comes from a sensor connected to an ESP32 microcontroller. My Raspberry Pi collects this data and, via [andersx-bot](https://github.com/andersx-bot/), periodically pushes it to a GitHub repository:  
 👉 [View the CSV on GitHub](https://github.com/andersx/data-upload)
