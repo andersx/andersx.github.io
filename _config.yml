@@ -12,10 +12,10 @@ plugins:
   - jekyll-sitemap
   - jekyll-feed
 
-google_analytics: G-WPJ47FTM5D
-
 exclude:
   - README.md
+
+google_analytics: G-WPJ47FTM5D
 
 minima:
   skin: 'dark'
