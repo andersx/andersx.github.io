@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "cuRFP: Factorizing the largest possible dense matrix on a GPU - beyond cuBLAS"
+title: "cuRFP: Same speed, half the memory - outscaling cuSOLVER with Rectangular Full Packed format on NVIDIA GPUs"
 date: 2026-04-18
 lang: en
 ---
