@@ -206,6 +206,8 @@ I did add one quality of life upgrade from BLAS notation, and that is that matri
 
 The RFP format is a neat trick to store an $n \times n$ symmetric matrix using only $n(n+1)/2$ floats — exactly half the storage of a full dense matrix. The trick is packing the memory in such a way that standard BLAS/LAPACK operations can be applied directly to the packed submatrices by adjusting stride and dimension parameters. Matrix operations on RFP matrices require the same FLOPs as their dense counterparts, so there is no computational penalty, only the minuscule overhead of 2–3 extra BLAS calls.
 
+I think this is the main reference if you'd like to read more about RFP format from the original inventors: [https://www.netlib.org/lapack/lawnspdf/lawn199.pdf](https://www.netlib.org/lapack/lawnspdf/lawn199.pdf)
+
 Let's say we have a $5 \times 5$ symmetric matrix stored with the upper triangle convention. We will use <span style="color:#e06c75">red</span>, <span style="color:#61afef">blue</span>, and <span style="color:#98c379">green</span> to label the three blocks consistently throughout this post. For odd $n$, the RFP layout splits the matrix into two triangular diagonal blocks and one rectangular off-diagonal block:
 
 $$
